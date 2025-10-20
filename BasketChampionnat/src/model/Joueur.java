@@ -1,28 +1,38 @@
 package model;
 
-public class Joueur {
-    private int id;
-    private String nom;
-    private String prenom;
-    private String position;
-    private int numero;
-    private Equipe equipe;
-    private int pointsMarques;
-    private int passesDecisives;
-    private int rebonds;
-    private int fautes;
+import jakarta.persistence.*;
 
-    public Joueur(int id, String nom, String prenom, String position, int numero, Equipe equipe) {
-        this.id = id;
+@Entity
+@Table(name = "joueurs")
+public class Joueur {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private String nom;
+
+    @Column(nullable = false)
+    private String prenom;
+
+    @Column(nullable = false)
+    private String position;
+
+    @Column(nullable = false)
+    private int numero;
+
+    @ManyToOne
+    @JoinColumn(name = "equipe_id", nullable = false)
+    private Equipe equipe;
+
+    public Joueur() {}
+
+    public Joueur(String nom, String prenom, String position, int numero, Equipe equipe) {
         this.nom = nom;
         this.prenom = prenom;
         this.position = position;
         this.numero = numero;
         this.equipe = equipe;
-        this.pointsMarques = 0;
-        this.passesDecisives = 0;
-        this.rebonds = 0;
-        this.fautes = 0;
     }
 
     public int getId() {
@@ -33,42 +43,40 @@ public class Joueur {
         return nom;
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     public String getPrenom() {
         return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getPosition() {
         return position;
     }
 
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     public int getNumero() {
         return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public Equipe getEquipe() {
         return equipe;
     }
 
-    public int getPointsMarques() {
-        return pointsMarques;
-    }
-
-    public int getPassesDecisives() {
-        return passesDecisives;
-    }
-
-    public int getRebonds() {
-        return rebonds;
-    }
-
-    public int getFautes() {
-        return fautes;
-    }
-
-    public void ajouterStats(int points, int passes, int rebonds, int fautes) {
-        this.pointsMarques += points;
-        this.passesDecisives += passes;
-        this.rebonds += rebonds;
-        this.fautes += fautes;
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
     }
 }
+
