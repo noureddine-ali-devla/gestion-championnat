@@ -1,47 +1,69 @@
 package dao;
 
 import model.Joueur;
-import java.util.ArrayList;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import util.HibernateUtil;
 import java.util.List;
 
-public class JoueurDAO implements IDAO<Joueur> {
-    private static List<Joueur> joueurs = new ArrayList<>();
+public class JoueurDAO {
 
-    public void ajouter(Joueur j) {
-        joueurs.add(j);
-    }
-
-    public void modifier(Joueur j) {
-        for (int i = 0; i < joueurs.size(); i++) {
-            if (joueurs.get(i).getId() == j.getId()) {
-                joueurs.set(i, j);
-                break;
-            }
+    public void save(Joueur joueur) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.persist(joueur);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
         }
     }
 
-    public void supprimer(int id) {
-        joueurs.removeIf(j -> j.getId() == id);
-    }
-
-    public Joueur getById(int id) {
-        for (Joueur j : joueurs) {
-            if (j.getId() == id) return j;
+    public void update(Joueur joueur) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.merge(joueur);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
         }
-        return null;
     }
 
-    public List<Joueur> getAll() {
-        return joueurs;
-    }
-
-    public List<Joueur> getByEquipeId(int idEquipe) {
-        List<Joueur> resultat = new ArrayList<>();
-        for (Joueur j : joueurs) {
-            if (j.getEquipe() != null && j.getEquipe().getId() == idEquipe) {
-                resultat.add(j);
-            }
+    public void delete(int id) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Joueur joueur = session.get(Joueur.class, id);
+            if (joueur != null) session.remove(joueur);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
         }
-        return resultat;
+    }
+
+    public Joueur findById(int id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Joueur.class, id);
+        }
+    }
+
+    public List<Joueur> findAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Joueur> query = session.createQuery("from Joueur", Joueur.class);
+            return query.list();
+        }
+    }
+
+    public List<Joueur> findByEquipeId(int equipeId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Joueur> query = session.createQuery("from Joueur where equipe.id = :equipeId", Joueur.class);
+            query.setParameter("equipeId", equipeId);
+            return query.list();
+        }
     }
 }
