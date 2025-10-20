@@ -1,35 +1,38 @@
 package model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "equipes")
 public class Equipe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nom;
-    private String ville;
-    private String entraineur;
-    private List<Joueur> joueurs;
-    private int points;
-    private int matchsJoues;
-    private int victoires;
-    private int defaites;
-    private int egalites;
-    private int butsMarques;
-    private int butsEncaisses;
 
-    public Equipe(int id, String nom, String ville, String entraineur) {
-        this.id = id;
+    @Column(nullable = false, unique = true)
+    private String nom;
+
+    @Column(nullable = false)
+    private String ville;
+
+    @OneToMany(mappedBy = "equipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Joueur> joueurs;
+
+    @OneToMany(mappedBy = "equipeDomicile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> matchsDomicile;
+
+    @OneToMany(mappedBy = "equipeExterieur", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> matchsExterieur;
+
+    @OneToOne(mappedBy = "equipe", cascade = CascadeType.ALL)
+    private Statistique statistique;
+
+    public Equipe() {}
+
+    public Equipe(String nom, String ville) {
         this.nom = nom;
         this.ville = ville;
-        this.entraineur = entraineur;
-        this.joueurs = new ArrayList<>();
-        this.points = 0;
-        this.matchsJoues = 0;
-        this.victoires = 0;
-        this.defaites = 0;
-        this.egalites = 0;
-        this.butsMarques = 0;
-        this.butsEncaisses = 0;
     }
 
     public int getId() {
@@ -40,66 +43,47 @@ public class Equipe {
         return nom;
     }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     public String getVille() {
         return ville;
     }
 
-    public String getEntraineur() {
-        return entraineur;
+    public void setVille(String ville) {
+        this.ville = ville;
     }
 
     public List<Joueur> getJoueurs() {
         return joueurs;
     }
 
-    public int getPoints() {
-        return points;
+    public void setJoueurs(List<Joueur> joueurs) {
+        this.joueurs = joueurs;
     }
 
-    public int getMatchsJoues() {
-        return matchsJoues;
+    public List<Match> getMatchsDomicile() {
+        return matchsDomicile;
     }
 
-    public int getVictoires() {
-        return victoires;
+    public void setMatchsDomicile(List<Match> matchsDomicile) {
+        this.matchsDomicile = matchsDomicile;
     }
 
-    public int getDefaites() {
-        return defaites;
+    public List<Match> getMatchsExterieur() {
+        return matchsExterieur;
     }
 
-    public int getEgalites() {
-        return egalites;
+    public void setMatchsExterieur(List<Match> matchsExterieur) {
+        this.matchsExterieur = matchsExterieur;
     }
 
-    public int getButsMarques() {
-        return butsMarques;
+    public Statistique getStatistique() {
+        return statistique;
     }
 
-    public int getButsEncaisses() {
-        return butsEncaisses;
-    }
-
-    public void ajouterJoueur(Joueur j) {
-        joueurs.add(j);
-    }
-
-    public void enregistrerResultat(int butsPour, int butsContre) {
-        matchsJoues++;
-        butsMarques += butsPour;
-        butsEncaisses += butsContre;
-        if (butsPour > butsContre) {
-            victoires++;
-            points += 3;
-        } else if (butsPour < butsContre) {
-            defaites++;
-        } else {
-            egalites++;
-            points += 1;
-        }
-    }
-
-    public int getDifferenceButs() {
-        return butsMarques - butsEncaisses;
+    public void setStatistique(Statistique statistique) {
+        this.statistique = statistique;
     }
 }
