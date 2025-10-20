@@ -1,45 +1,73 @@
 package util;
 
-import dao.EquipeDAO;
-import dao.JoueurDAO;
-import dao.MatchDAO;
 import model.Equipe;
 import model.Joueur;
 import model.Match;
+import model.Statistique;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 public class DataInitializer {
-    private EquipeDAO equipeDAO;
-    private JoueurDAO joueurDAO;
-    private MatchDAO matchDAO;
 
-    public DataInitializer(EquipeDAO equipeDAO, JoueurDAO joueurDAO, MatchDAO matchDAO) {
-        this.equipeDAO = equipeDAO;
-        this.joueurDAO = joueurDAO;
-        this.matchDAO = matchDAO;
-    }
+    public static void initialize() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
 
-    public void initialiser() {
-        Equipe e1 = new Equipe(1, "Tigers", "Casablanca", "Alaoui");
-        Equipe e2 = new Equipe(2, "Lions", "Rabat", "Bennani");
-        Equipe e3 = new Equipe(3, "Eagles", "Marrakech", "Fassi");
-        Equipe e4 = new Equipe(4, "Sharks", "Agadir", "El Idrissi");
+            Long countEquipes = (Long) session.createQuery("SELECT COUNT(e) FROM Equipe e").uniqueResult();
+            if (countEquipes != null && countEquipes > 0) {
+                tx.rollback();
+                return;
+            }
 
-        equipeDAO.ajouter(e1);
-        equipeDAO.ajouter(e2);
-        equipeDAO.ajouter(e3);
-        equipeDAO.ajouter(e4);
+            Equipe e1 = new Equipe("Raptors Agadir", "Agadir", "coach.raptors@gmail.com");
+            Equipe e2 = new Equipe("Lions Casablanca", "Casablanca", "coach.lions@gmail.com");
+            Equipe e3 = new Equipe("Eagles Marrakech", "Marrakech", "coach.eagles@gmail.com");
 
-        joueurDAO.ajouter(new Joueur(1, "Amine", "El Fadili", "Ailier", 7, e1));
-        joueurDAO.ajouter(new Joueur(2, "Karim", "Rami", "Pivot", 10, e1));
-        joueurDAO.ajouter(new Joueur(3, "Youssef", "Azzouzi", "Meneur", 5, e2));
-        joueurDAO.ajouter(new Joueur(4, "Omar", "Bourhim", "Arrière", 8, e2));
-        joueurDAO.ajouter(new Joueur(5, "Hamza", "Saidi", "Ailier fort", 11, e3));
-        joueurDAO.ajouter(new Joueur(6, "Nabil", "Cherkaoui", "Pivot", 9, e4));
+            Joueur j1 = new Joueur("Youssef", "Bennani", "Arrière", e1);
+            Joueur j2 = new Joueur("Omar", "El Idrissi", "Ailier", e1);
+            Joueur j3 = new Joueur("Adam", "Bouzekri", "Pivot", e2);
+            Joueur j4 = new Joueur("Karim", "Moutaouakil", "Meneur", e2);
+            Joueur j5 = new Joueur("Walid", "Tazi", "Arrière", e3);
 
-        matchDAO.ajouter(new Match(1, e1, e2, LocalDate.of(2025, 1, 10)));
-        matchDAO.ajouter(new Match(2, e3, e4, LocalDate.of(2025, 1, 11)));
-        matchDAO.ajouter(new Match(3, e1, e3, LocalDate.of(2025, 1, 15)));
-        matchDAO.ajouter(new Match(4, e2, e4, LocalDate.of(2025, 1, 17)));
+            List<Equipe> equipes = Arrays.asList(e1, e2, e3);
+            List<Joueur> joueurs = Arrays.asList(j1, j2, j3, j4, j5);
+
+            for (Equipe e : equipes) {
+                session.persist(e);
+            }
+            for (Joueur j : joueurs) {
+                session.persist(j);
+            }
+
+            Match m1 = new Match(e1, e2, LocalDate.now().minusDays(3), 80, 75);
+            Match m2 = new Match(e2, e3, LocalDate.now().minusDays(2), 68, 70);
+            Match m3 = new Match(e3, e1, LocalDate.now().minusDays(1), 82, 78);
+
+            List<Match> matchs = Arrays.asList(m1, m2, m3);
+            for (Match m : matchs) {
+                session.persist(m);
+            }
+
+            for (Equipe e : equipes) {
+                Statistique s = new Statistique(e);
+                s.setMatchsJoues(2);
+                s.setVictoires(e.equals(e3) ? 2 : e.equals(e1) ? 1 : 0);
+                s.setDefaites(e.equals(e3) ? 0 : e.equals(e1) ? 1 : 2);
+                s.setButsMarques((int) (Math.random() * 150 + 100));
+                s.setButsEncaisses((int) (Math.random() * 150 + 100));
+                s.setDifferenceButs(s.getButsMarques() - s.getButsEncaisses());
+                s.setPoints(s.getVictoires() * 3);
+                session.persist(s);
+            }
+
+            tx.commit();
+            System.out.println("Base de données initialisée avec succès !");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
