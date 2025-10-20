@@ -1,0 +1,12 @@
+.git
+.gitignore
+README.md
+*.md
+*.log
+*.tmp
+*.bak
+*.class
+target/
+.settings/
+.project
+.classpath
