@@ -1,61 +1,84 @@
 package model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "matchs")
 public class Match {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Equipe equipeA;
-    private Equipe equipeB;
-    private int scoreA;
-    private int scoreB;
-    private LocalDate dateMatch;
-    private boolean termine;
 
-    public Match(int id, Equipe equipeA, Equipe equipeB, LocalDate dateMatch) {
-        this.id = id;
-        this.equipeA = equipeA;
-        this.equipeB = equipeB;
+    @ManyToOne
+    @JoinColumn(name = "equipe_domicile_id", nullable = false)
+    private Equipe equipeDomicile;
+
+    @ManyToOne
+    @JoinColumn(name = "equipe_exterieur_id", nullable = false)
+    private Equipe equipeExterieur;
+
+    @Column(nullable = false)
+    private LocalDate dateMatch;
+
+    @Column(nullable = false)
+    private int scoreDomicile;
+
+    @Column(nullable = false)
+    private int scoreExterieur;
+
+    public Match() {}
+
+    public Match(Equipe equipeDomicile, Equipe equipeExterieur, LocalDate dateMatch, int scoreDomicile, int scoreExterieur) {
+        this.equipeDomicile = equipeDomicile;
+        this.equipeExterieur = equipeExterieur;
         this.dateMatch = dateMatch;
-        this.scoreA = 0;
-        this.scoreB = 0;
-        this.termine = false;
+        this.scoreDomicile = scoreDomicile;
+        this.scoreExterieur = scoreExterieur;
     }
 
     public int getId() {
         return id;
     }
 
-    public Equipe getEquipeA() {
-        return equipeA;
+    public Equipe getEquipeDomicile() {
+        return equipeDomicile;
     }
 
-    public Equipe getEquipeB() {
-        return equipeB;
+    public void setEquipeDomicile(Equipe equipeDomicile) {
+        this.equipeDomicile = equipeDomicile;
     }
 
-    public int getScoreA() {
-        return scoreA;
+    public Equipe getEquipeExterieur() {
+        return equipeExterieur;
     }
 
-    public int getScoreB() {
-        return scoreB;
+    public void setEquipeExterieur(Equipe equipeExterieur) {
+        this.equipeExterieur = equipeExterieur;
     }
 
     public LocalDate getDateMatch() {
         return dateMatch;
     }
 
-    public boolean isTermine() {
-        return termine;
+    public void setDateMatch(LocalDate dateMatch) {
+        this.dateMatch = dateMatch;
     }
 
-    public void enregistrerScore(int scoreA, int scoreB) {
-        if (!termine) {
-            this.scoreA = scoreA;
-            this.scoreB = scoreB;
-            equipeA.enregistrerResultat(scoreA, scoreB);
-            equipeB.enregistrerResultat(scoreB, scoreA);
-            this.termine = true;
-        }
+    public int getScoreDomicile() {
+        return scoreDomicile;
+    }
+
+    public void setScoreDomicile(int scoreDomicile) {
+        this.scoreDomicile = scoreDomicile;
+    }
+
+    public int getScoreExterieur() {
+        return scoreExterieur;
+    }
+
+    public void setScoreExterieur(int scoreExterieur) {
+        this.scoreExterieur = scoreExterieur;
     }
 }
+
