@@ -6,6 +6,7 @@
 </head>
 <body>
 <header>
+    <img src="assets/img/logo.png" alt="Logo" style="height:80px; margin-bottom:10px;">
     <h1>Championnat de Basketball</h1>
 </header>
 <nav>
@@ -16,3 +17,4 @@
     <a href="classement">Classement</a>
 </nav>
 <main>
+
