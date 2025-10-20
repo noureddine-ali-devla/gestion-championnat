@@ -1,45 +1,71 @@
 package dao;
 
 import model.Match;
-import java.util.ArrayList;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import util.HibernateUtil;
 import java.util.List;
 
-public class MatchDAO implements IDAO<Match> {
-    private static List<Match> matchs = new ArrayList<>();
+public class MatchDAO {
 
-    public void ajouter(Match m) {
-        matchs.add(m);
-    }
-
-    public void modifier(Match m) {
-        for (int i = 0; i < matchs.size(); i++) {
-            if (matchs.get(i).getId() == m.getId()) {
-                matchs.set(i, m);
-                break;
-            }
+    public void save(Match match) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.persist(match);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
         }
     }
 
-    public void supprimer(int id) {
-        matchs.removeIf(m -> m.getId() == id);
-    }
-
-    public Match getById(int id) {
-        for (Match m : matchs) {
-            if (m.getId() == id) return m;
+    public void update(Match match) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.merge(match);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
         }
-        return null;
     }
 
-    public List<Match> getAll() {
-        return matchs;
-    }
-
-    public List<Match> getMatchsNonTermines() {
-        List<Match> resultat = new ArrayList<>();
-        for (Match m : matchs) {
-            if (!m.isTermine()) resultat.add(m);
+    public void delete(int id) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Match match = session.get(Match.class, id);
+            if (match != null) session.remove(match);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
         }
-        return resultat;
+    }
+
+    public Match findById(int id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Match.class, id);
+        }
+    }
+
+    public List<Match> findAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Match> query = session.createQuery("from Match", Match.class);
+            return query.list();
+        }
+    }
+
+    public List<Match> findByEquipeId(int equipeId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Match> query = session.createQuery(
+                "from Match where equipeDomicile.id = :id or equipeExterieur.id = :id", Match.class);
+            query.setParameter("id", equipeId);
+            return query.list();
+        }
     }
 }
+
