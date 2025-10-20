@@ -1,70 +1,76 @@
 package service;
 
-import dao.*;
-import model.*;
+import dao.EquipeDAO;
+import dao.JoueurDAO;
+import dao.MatchDAO;
+import model.Equipe;
+import model.Joueur;
+import model.Match;
 import java.util.List;
 
 public class ChampionnatService {
-    private EquipeDAO equipeDAO = new EquipeDAO();
-    private JoueurDAO joueurDAO = new JoueurDAO();
-    private MatchDAO matchDAO = new MatchDAO();
+    private final EquipeDAO equipeDAO = new EquipeDAO();
+    private final JoueurDAO joueurDAO = new JoueurDAO();
+    private final MatchDAO matchDAO = new MatchDAO();
 
-    public ChampionnatService() {
-        initialiserDonnees();
+    public void ajouterEquipe(Equipe equipe) {
+        equipeDAO.save(equipe);
     }
 
-    private void initialiserDonnees() {
-        for (Equipe e : Database.getEquipes()) {
-            equipeDAO.ajouter(e);
-        }
-        for (Joueur j : Database.getJoueurs()) {
-            joueurDAO.ajouter(j);
-        }
-        for (Match m : Database.getMatchs()) {
-            matchDAO.ajouter(m);
-        }
+    public void modifierEquipe(Equipe equipe) {
+        equipeDAO.update(equipe);
     }
 
-    public List<Equipe> getEquipes() {
-        return equipeDAO.getAll();
+    public void supprimerEquipe(int id) {
+        equipeDAO.delete(id);
     }
 
-    public List<Joueur> getJoueurs() {
-        return joueurDAO.getAll();
+    public List<Equipe> listerEquipes() {
+        return equipeDAO.findAll();
     }
 
-    public List<Match> getMatchs() {
-        return matchDAO.getAll();
+    public Equipe trouverEquipeParId(int id) {
+        return equipeDAO.findById(id);
     }
 
-    public Equipe getEquipeById(int id) {
-        return equipeDAO.getById(id);
+    public void ajouterJoueur(Joueur joueur) {
+        joueurDAO.save(joueur);
     }
 
-    public Joueur getJoueurById(int id) {
-        return joueurDAO.getById(id);
+    public void modifierJoueur(Joueur joueur) {
+        joueurDAO.update(joueur);
     }
 
-    public Match getMatchById(int id) {
-        return matchDAO.getById(id);
+    public void supprimerJoueur(int id) {
+        joueurDAO.delete(id);
     }
 
-    public void ajouterEquipe(Equipe e) {
-        equipeDAO.ajouter(e);
+    public List<Joueur> listerJoueurs() {
+        return joueurDAO.findAll();
     }
 
-    public void ajouterJoueur(Joueur j) {
-        joueurDAO.ajouter(j);
+    public List<Joueur> listerJoueursParEquipe(int equipeId) {
+        return joueurDAO.findByEquipeId(equipeId);
     }
 
-    public void ajouterMatch(Match m) {
-        matchDAO.ajouter(m);
+    public void ajouterMatch(Match match) {
+        matchDAO.save(match);
     }
 
-    public void enregistrerScore(int idMatch, int scoreA, int scoreB) {
-        Match m = matchDAO.getById(idMatch);
-        if (m != null && !m.isTermine()) {
-            m.enregistrerScore(scoreA, scoreB);
-        }
+    public void modifierMatch(Match match) {
+        matchDAO.update(match);
+    }
+
+    public void supprimerMatch(int id) {
+        matchDAO.delete(id);
+    }
+
+    public List<Match> listerMatchs() {
+        return matchDAO.findAll();
+    }
+
+    public List<Match> listerMatchsParEquipe(int equipeId) {
+        return matchDAO.findByEquipeId(equipeId);
     }
 }
+
