@@ -9,14 +9,14 @@
 
     <filter>
         <filter-name>EncodingFilter</filter-name>
-        <filter-class>jakarta.servlet.Filter</filter-class>
+        <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
         </init-param>
         <init-param>
-            <param-name>forceEncoding</param-name>
-            <param-value>true</param-value>
+            <param-name>ignore</param-name>
+            <param-value>false</param-value>
         </init-param>
     </filter>
 
@@ -24,7 +24,7 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-         
+
     <servlet>
         <servlet-name>EquipeServlet</servlet-name>
         <servlet-class>servlet.EquipeServlet</servlet-class>
@@ -52,7 +52,6 @@
         <url-pattern>/matchs</url-pattern>
     </servlet-mapping>
 
-    <!-- Gestion du classement -->
     <servlet>
         <servlet-name>ClassementServlet</servlet-name>
         <servlet-class>servlet.ClassementServlet</servlet-class>
@@ -62,36 +61,23 @@
         <url-pattern>/classement</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>AuthServlet</servlet-name>
-        <servlet-class>servlet.AuthServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AuthServlet</servlet-name>
-        <url-pattern>/auth</url-pattern>
-    </servlet-mapping>
+    <listener>
+        <listener-class>util.DataInitializer</listener-class>
+    </listener>
 
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>servlet.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/erreur.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/erreur.jsp</location>
+    </error-page>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/pages/error404.jsp</location>
-    </error-page>
-
-    <error-page>
-        <error-code>500</error-code>
-        <location>/pages/error500.jsp</location>
-    </error-page>
-
 </web-app>
+
