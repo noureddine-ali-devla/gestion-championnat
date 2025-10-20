@@ -1,24 +1,28 @@
-# Use official Tomcat 10 image with Java 17
+# Use official Tomcat 10 with Java 17
 FROM tomcat:10.1-jdk17-temurin
 
-# Disable the Tomcat shutdown port (avoids Render health-check warnings)
+# Disable Tomcat shutdown port to stop Render health-check warnings
 RUN sed -i 's/port="8005"/port="-1"/' /usr/local/tomcat/conf/server.xml
 
-# Remove default Tomcat applications
+# Remove default example webapps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Create directory for compiled classes
 RUN mkdir -p /usr/local/tomcat/webapps/ROOT/WEB-INF/classes
 
-# Copy and compile Java source files into WEB-INF/classes
+# Copy and compile Java source files, linking against Tomcat's Jakarta Servlet API
 COPY BasketChampionnat/src/ /tmp/src/
-RUN javac -encoding UTF-8 -d /usr/local/tomcat/webapps/ROOT/WEB-INF/classes $(find /tmp/src -name "*.java")
+RUN javac -encoding UTF-8 \
+    -classpath /usr/local/tomcat/lib/jakarta.servlet-api.jar \
+    -d /usr/local/tomcat/webapps/ROOT/WEB-INF/classes \
+    $(find /tmp/src -name "*.java")
 
-# Copy all JSPs, assets, and web.xml into Tomcat ROOT webapp
+# Copy JSPs, web.xml, CSS, images, etc. into ROOT webapp
 COPY BasketChampionnat/WebContent/ /usr/local/tomcat/webapps/ROOT/
 
-# Expose Tomcat HTTP port
+# Expose default Tomcat HTTP port
 EXPOSE 8080
 
-# Launch Tomcat
+# Start Tomcat
 CMD ["catalina.sh", "run"]
+
