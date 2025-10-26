@@ -4,9 +4,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import service.ClassementService;
-import model.Statistique;
 import java.io.IOException;
 import java.util.List;
+import model.Statistique;
 
 @WebServlet("/classement")
 public class ClassementServlet extends HttpServlet {
