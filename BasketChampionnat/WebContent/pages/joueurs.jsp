@@ -2,56 +2,47 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Joueur" %>
 <%@ page import="dao.JoueurDAO" %>
+<%@ include file="../header.jsp" %>
 
-<%@ include file="../includes/header.jsp" %>
-
-<%
-    // Vérifie la session (ne pas redéclarer HttpSession)
-    String username = (String) session.getAttribute("user");
-    if (username == null) {
-        response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
-        return;
-    }
-
-    JoueurDAO joueurDAO = new JoueurDAO();
-    List<Joueur> joueurs = joueurDAO.getAllJoueurs();
-%>
-
-<section class="content">
-    <h2>Liste des Joueurs</h2>
-
-    <table border="1" cellpadding="8" cellspacing="0">
+<html>
+<head>
+    <title>Gestion des Joueurs</title>
+</head>
+<body>
+    <h1>Liste des Joueurs</h1>
+    <a href="ajouterJoueur.jsp" class="btn">Ajouter un joueur</a>
+    <table border="1" cellpadding="5" cellspacing="0">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
-                <th>Poste</th>
+                <th>Prénom</th>
                 <th>Équipe</th>
+                <th>Poste</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        <%
-            if (joueurs != null && !joueurs.isEmpty()) {
+            <%
+                JoueurDAO joueurDAO = new JoueurDAO();
+                List<Joueur> joueurs = joueurDAO.listJoueurs();
                 for (Joueur j : joueurs) {
-        %>
-                    <tr>
-                        <td><%= j.getId() %></td>
-                        <td><%= j.getNom() %></td>
-                        <td><%= j.getPoste() %></td>
-                        <td><%= (j.getEquipe() != null) ? j.getEquipe().getNom() : "Aucune" %></td>
-                    </tr>
-        <%
-                }
-            } else {
-        %>
-                <tr><td colspan="4">Aucun joueur trouvé.</td></tr>
-        <%
-            }
-        %>
+            %>
+            <tr>
+                <td><%= j.getId() %></td>
+                <td><a href="detailsJoueur.jsp?id=<%= j.getId() %>"><%= j.getNom() %></a></td>
+                <td><%= j.getPrenom() %></td>
+                <td><%= j.getEquipe() != null ? j.getEquipe().getNom() : "-" %></td>
+                <td><%= j.getPoste() %></td>
+                <td>
+                    <a href="modifierJoueur.jsp?id=<%= j.getId() %>">Modifier</a>
+                </td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
-</section>
+</body>
+</html>
 
-<%@ include file="../includes/footer.jsp" %>
 
 
