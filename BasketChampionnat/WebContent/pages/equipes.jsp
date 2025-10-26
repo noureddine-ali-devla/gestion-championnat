@@ -18,7 +18,6 @@
         <tr>
             <th>Nom</th>
             <th>Ville</th>
-            <th>Entraîneur</th>
         </tr>
     </thead>
     <tbody>
