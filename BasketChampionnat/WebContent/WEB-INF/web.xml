@@ -7,19 +7,14 @@
 
     <display-name>BasketChampionnat</display-name>
 
-    <!-- Filter -->
+    <!-- Filtre d'authentification -->
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>filter.AuthFilter</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/pages/dashboard.jsp</url-pattern>
-        <url-pattern>/pages/equipes.jsp</url-pattern>
-        <url-pattern>/pages/joueurs.jsp</url-pattern>
-        <url-pattern>/pages/matchs.jsp</url-pattern>
-        <url-pattern>/pages/classement.jsp</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <!-- Servlets -->
@@ -77,12 +72,12 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
-    <!-- Welcome file -->
+    <!-- Page d'accueil -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Error pages -->
+    <!-- Pages d'erreur -->
     <error-page>
         <error-code>404</error-code>
         <location>/pages/erreur.jsp</location>
@@ -94,5 +89,6 @@
     </error-page>
 
 </web-app>
+
 
 
