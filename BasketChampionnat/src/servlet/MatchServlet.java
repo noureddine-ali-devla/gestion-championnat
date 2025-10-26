@@ -12,7 +12,7 @@ import java.util.List;
 
 @WebServlet("/matchs")
 public class MatchServlet extends HttpServlet {
-    private final ChampionnatService service = new ChampionnatService();
+    private ChampionnatService service = new ChampionnatService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -22,7 +22,7 @@ public class MatchServlet extends HttpServlet {
             request.setAttribute("matchs", matchs);
             request.setAttribute("equipes", equipes);
             request.getRequestDispatcher("pages/matchs.jsp").forward(request, response);
-        } else if (action.equals("score")) {
+        } else if ("score".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             Match m = service.getMatchById(id);
             request.setAttribute("match", m);
@@ -38,7 +38,7 @@ public class MatchServlet extends HttpServlet {
             LocalDate date = LocalDate.parse(request.getParameter("date"));
             Equipe equipeA = service.getEquipeById(idEquipeA);
             Equipe equipeB = service.getEquipeById(idEquipeB);
-            Match m = new Match(equipeA, equipeB, date, 0, 0);
+            Match m = new Match(equipeA, equipeB, date, 0, 0, ""); 
             service.ajouterMatch(m);
             response.sendRedirect("matchs");
         } else if ("enregistrerScore".equals(action)) {
