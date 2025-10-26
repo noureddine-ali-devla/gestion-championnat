@@ -7,6 +7,7 @@
 
     <display-name>BasketChampionnat</display-name>
 
+    <!-- Filter -->
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>filter.AuthFilter</filter-class>
@@ -14,13 +15,14 @@
 
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/dashboard.jsp</url-pattern>
-        <url-pattern>/equipes</url-pattern>
-        <url-pattern>/joueurs</url-pattern>
-        <url-pattern>/matchs</url-pattern>
-        <url-pattern>/classement</url-pattern>
+        <url-pattern>/pages/dashboard.jsp</url-pattern>
+        <url-pattern>/pages/equipes.jsp</url-pattern>
+        <url-pattern>/pages/joueurs.jsp</url-pattern>
+        <url-pattern>/pages/matchs.jsp</url-pattern>
+        <url-pattern>/pages/classement.jsp</url-pattern>
     </filter-mapping>
 
+    <!-- Servlets -->
     <servlet>
         <servlet-name>EquipeServlet</servlet-name>
         <servlet-class>servlet.EquipeServlet</servlet-class>
@@ -48,7 +50,6 @@
         <url-pattern>/matchs</url-pattern>
     </servlet-mapping>
 
-    <!-- ClassementServlet : uniquement via web.xml, supprime l’annotation @WebServlet dans le code -->
     <servlet>
         <servlet-name>ClassementServlet</servlet-name>
         <servlet-class>servlet.ClassementServlet</servlet-class>
@@ -76,10 +77,12 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <!-- Welcome file -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <!-- Error pages -->
     <error-page>
         <error-code>404</error-code>
         <location>/pages/erreur.jsp</location>
