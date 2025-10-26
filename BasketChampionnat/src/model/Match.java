@@ -4,44 +4,43 @@ import java.time.LocalDate;
 
 public class Match {
     private int id;
-    private Equipe equipeA;
-    private Equipe equipeB;
+    private Equipe equipeDomicile;
+    private Equipe equipeExterieur;
     private LocalDate date;
-    private int scoreA;
-    private int scoreB;
-    private boolean termine;
+    private int scoreDomicile;
+    private int scoreExterieur;
+    private boolean joue;
 
     public Match() {}
 
-    public Match(Equipe equipeA, Equipe equipeB, LocalDate date, int scoreA, int scoreB, boolean termine) {
-        this.equipeA = equipeA;
-        this.equipeB = equipeB;
+    public Match(Equipe equipeDomicile, Equipe equipeExterieur, LocalDate date, int scoreDomicile, int scoreExterieur, boolean joue) {
+        this.equipeDomicile = equipeDomicile;
+        this.equipeExterieur = equipeExterieur;
         this.date = date;
-        this.scoreA = scoreA;
-        this.scoreB = scoreB;
-        this.termine = termine;
+        this.scoreDomicile = scoreDomicile;
+        this.scoreExterieur = scoreExterieur;
+        this.joue = joue;
     }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public Equipe getEquipeA() { return equipeA; }
-    public void setEquipeA(Equipe equipeA) { this.equipeA = equipeA; }
+    public Equipe getEquipeDomicile() { return equipeDomicile; }
+    public void setEquipeDomicile(Equipe equipeDomicile) { this.equipeDomicile = equipeDomicile; }
 
-    public Equipe getEquipeB() { return equipeB; }
-    public void setEquipeB(Equipe equipeB) { this.equipeB = equipeB; }
+    public Equipe getEquipeExterieur() { return equipeExterieur; }
+    public void setEquipeExterieur(Equipe equipeExterieur) { this.equipeExterieur = equipeExterieur; }
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }
 
-    public int getScoreA() { return scoreA; }
-    public void setScoreA(int scoreA) { this.scoreA = scoreA; }
+    public int getScoreDomicile() { return scoreDomicile; }
+    public void setScoreDomicile(int scoreDomicile) { this.scoreDomicile = scoreDomicile; }
 
-    public int getScoreB() { return scoreB; }
-    public void setScoreB(int scoreB) { this.scoreB = scoreB; }
+    public int getScoreExterieur() { return scoreExterieur; }
+    public void setScoreExterieur(int scoreExterieur) { this.scoreExterieur = scoreExterieur; }
 
-    public boolean isTermine() { return termine; }
-    public void setTermine(boolean termine) { this.termine = termine; }
+    public boolean isJoue() { return joue; }
+    public void setJoue(boolean joue) { this.joue = joue; }
 }
-
 
