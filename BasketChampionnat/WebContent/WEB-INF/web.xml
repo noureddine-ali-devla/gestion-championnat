@@ -12,7 +12,6 @@
         <servlet-name>AuthServlet</servlet-name>
         <servlet-class>servlet.AuthServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>
         <url-pattern>/auth</url-pattern>
@@ -23,10 +22,49 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>servlet.LogoutServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <!-- Equipes -->
+    <servlet>
+        <servlet-name>EquipeServlet</servlet-name>
+        <servlet-class>servlet.EquipeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EquipeServlet</servlet-name>
+        <url-pattern>/equipes</url-pattern>
+    </servlet-mapping>
+
+    <!-- Joueurs -->
+    <servlet>
+        <servlet-name>JoueurServlet</servlet-name>
+        <servlet-class>servlet.JoueurServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JoueurServlet</servlet-name>
+        <url-pattern>/joueurs</url-pattern>
+    </servlet-mapping>
+
+    <!-- Matchs -->
+    <servlet>
+        <servlet-name>MatchServlet</servlet-name>
+        <servlet-class>servlet.MatchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MatchServlet</servlet-name>
+        <url-pattern>/matchs</url-pattern>
+    </servlet-mapping>
+
+    <!-- Classement -->
+    <servlet>
+        <servlet-name>ClassementServlet</servlet-name>
+        <servlet-class>servlet.ClassementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClassementServlet</servlet-name>
+        <url-pattern>/classement</url-pattern>
     </servlet-mapping>
 
     <session-config>
@@ -36,7 +74,6 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
 </web-app>
 
 
