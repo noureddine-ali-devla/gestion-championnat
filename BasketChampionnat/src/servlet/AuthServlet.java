@@ -3,14 +3,12 @@ package servlet;
 import dao.UserDAO;
 import model.User;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -28,9 +26,9 @@ public class AuthServlet extends HttpServlet {
         if ("logout".equals(action)) {
             HttpSession session = request.getSession(false);
             if (session != null) session.invalidate();
-            response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
+            response.sendRedirect("pages/login.jsp");
         } else {
-            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
+            request.getRequestDispatcher("pages/login.jsp").forward(request, response);
         }
     }
 
@@ -43,7 +41,7 @@ public class AuthServlet extends HttpServlet {
 
         if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
             request.setAttribute("error", "Veuillez remplir tous les champs.");
-            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
+            request.getRequestDispatcher("pages/login.jsp").forward(request, response);
             return;
         }
 
@@ -52,11 +50,12 @@ public class AuthServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            response.sendRedirect(request.getContextPath() + "/pages/dashboard.jsp");
+            response.sendRedirect("pages/dashboard.jsp");
         } else {
             request.setAttribute("error", "Nom d’utilisateur ou mot de passe incorrect.");
-            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
+            request.getRequestDispatcher("pages/login.jsp").forward(request, response);
         }
     }
 }
+
 
