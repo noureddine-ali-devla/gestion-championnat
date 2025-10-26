@@ -26,6 +26,7 @@ public class AuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        // Rien à initialiser
     }
 
     @Override
@@ -34,11 +35,13 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+
         HttpSession session = req.getSession(false);
 
         // Chemin relatif au contexte
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
+        // Vérifie si le chemin est exclu
         boolean excluded = false;
         for (String excludedPath : EXCLUDED_PATHS) {
             if (path.startsWith(excludedPath)) {
@@ -47,18 +50,21 @@ public class AuthFilter implements Filter {
             }
         }
 
-        // Vérifie l’authentification si ce n’est pas une page exclue
+        // Si la page n'est pas exclue, vérifier session
         if (!excluded) {
             if (session == null || session.getAttribute("user") == null) {
+                // Rediriger vers login
                 res.sendRedirect(req.getContextPath() + "/pages/login.jsp");
                 return;
             }
         }
 
+        // Continuer la requête
         chain.doFilter(request, response);
     }
 
     @Override
     public void destroy() {
+        // Rien à détruire
     }
 }
