@@ -4,7 +4,7 @@
 <section class="login-container">
     <h2>Connexion à l’Espace Administrateur</h2>
 
-    <form action="auth" method="post">
+    <form action="<%= request.getContextPath() %>/auth" method="post">
         <label for="username">Nom d’utilisateur</label>
         <input type="text" id="username" name="username" placeholder="Entrez votre nom d’utilisateur" required>
 
@@ -14,7 +14,7 @@
         <button type="submit">Se connecter</button>
     </form>
 
-    <a href="register.jsp" class="btn-link">Créer un compte</a>
+    <a href="<%= request.getContextPath() %>/pages/register.jsp" class="btn-link">Créer un compte</a>
 
     <%
         String error = (String) request.getAttribute("error");
