@@ -26,11 +26,11 @@ public class DataInitializer {
             Equipe e2 = new Equipe("Lions Casablanca", "Casablanca", "coach.lions@gmail.com");
             Equipe e3 = new Equipe("Eagles Marrakech", "Marrakech", "coach.eagles@gmail.com");
 
-            Joueur j1 = new Joueur("Youssef", "Bennani", "Arrière", 1, e1);
-            Joueur j2 = new Joueur("Omar", "El Idrissi", "Ailier", 2, e1);
-            Joueur j3 = new Joueur("Adam", "Bouzekri", "Pivot", 3, e2);
-            Joueur j4 = new Joueur("Karim", "Moutaouakil", "Meneur", 4, e2);
-            Joueur j5 = new Joueur("Walid", "Tazi", "Arrière", 5, e3);
+            Joueur j1 = new Joueur("Youssef", "Bennani", "Arrière", 1, 0, e1);
+            Joueur j2 = new Joueur("Omar", "El Idrissi", "Ailier", 2, 0, e1);
+            Joueur j3 = new Joueur("Adam", "Bouzekri", "Pivot", 3, 0, e2);
+            Joueur j4 = new Joueur("Karim", "Moutaouakil", "Meneur", 4, 0, e2);
+            Joueur j5 = new Joueur("Walid", "Tazi", "Arrière", 5, 0, e3);
 
             List<Equipe> equipes = Arrays.asList(e1, e2, e3);
             List<Joueur> joueurs = Arrays.asList(j1, j2, j3, j4, j5);
@@ -38,9 +38,9 @@ public class DataInitializer {
             for (Equipe e : equipes) session.persist(e);
             for (Joueur j : joueurs) session.persist(j);
 
-            Match m1 = new Match(e1, e2, LocalDate.now().minusDays(3), 80, 75, "Gymnase Agadir");
-            Match m2 = new Match(e2, e3, LocalDate.now().minusDays(2), 68, 70, "Gymnase Casablanca");
-            Match m3 = new Match(e3, e1, LocalDate.now().minusDays(1), 82, 78, "Gymnase Marrakech");
+            Match m1 = new Match(e1, e2, LocalDate.now().minusDays(3), 80, 75, "");
+            Match m2 = new Match(e2, e3, LocalDate.now().minusDays(2), 68, 70, "");
+            Match m3 = new Match(e3, e1, LocalDate.now().minusDays(1), 82, 78, "");
 
             List<Match> matchs = Arrays.asList(m1, m2, m3);
             for (Match m : matchs) session.persist(m);
