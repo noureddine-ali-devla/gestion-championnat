@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@WebServlet("/matchs")
 public class MatchServlet extends HttpServlet {
     private ChampionnatService service = new ChampionnatService();
 
