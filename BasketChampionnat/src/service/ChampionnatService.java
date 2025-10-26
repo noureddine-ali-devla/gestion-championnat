@@ -25,11 +25,11 @@ public class ChampionnatService {
         equipeDAO.delete(id);
     }
 
-    public List<Equipe> listerEquipes() {
+    public List<Equipe> getEquipes() {
         return equipeDAO.findAll();
     }
 
-    public Equipe trouverEquipeParId(int id) {
+    public Equipe getEquipeById(int id) {
         return equipeDAO.findById(id);
     }
 
@@ -45,12 +45,12 @@ public class ChampionnatService {
         joueurDAO.delete(id);
     }
 
-    public List<Joueur> listerJoueurs() {
+    public List<Joueur> getJoueurs() {
         return joueurDAO.findAll();
     }
 
-    public List<Joueur> listerJoueursParEquipe(int equipeId) {
-        return joueurDAO.findByEquipeId(equipeId);
+    public Joueur getJoueurById(int id) {
+        return joueurDAO.findById(id);
     }
 
     public void ajouterMatch(Match match) {
@@ -65,12 +65,17 @@ public class ChampionnatService {
         matchDAO.delete(id);
     }
 
-    public List<Match> listerMatchs() {
+    public List<Match> getMatchs() {
         return matchDAO.findAll();
     }
 
-    public List<Match> listerMatchsParEquipe(int equipeId) {
-        return matchDAO.findByEquipeId(equipeId);
+    public Match getMatchById(int id) {
+        return matchDAO.findById(id);
+    }
+
+    public void enregistrerScore(int idMatch, int scoreA, int scoreB) {
+        matchDAO.updateScore(idMatch, scoreA, scoreB);
     }
 }
+
 
