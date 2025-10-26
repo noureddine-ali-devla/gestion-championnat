@@ -38,7 +38,7 @@ public class MatchServlet extends HttpServlet {
             LocalDate date = LocalDate.parse(request.getParameter("date"));
             Equipe equipeA = service.getEquipeById(idEquipeA);
             Equipe equipeB = service.getEquipeById(idEquipeB);
-            Match m = new Match(equipeA, equipeB, date, 0, 0, ""); 
+            Match m = new Match(equipeA, equipeB, date, 0, 0, "");
             service.ajouterMatch(m);
             response.sendRedirect("matchs");
         } else if ("enregistrerScore".equals(action)) {
@@ -50,3 +50,4 @@ public class MatchServlet extends HttpServlet {
         }
     }
 }
+
