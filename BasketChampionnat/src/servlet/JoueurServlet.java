@@ -9,7 +9,6 @@ import model.Equipe;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/joueurs")
 public class JoueurServlet extends HttpServlet {
     private final ChampionnatService service = new ChampionnatService();
 
