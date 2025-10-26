@@ -21,17 +21,21 @@ public class Joueur {
     @Column(nullable = false)
     private int numero;
 
+    @Column(nullable = false)
+    private int age;
+
     @ManyToOne
     @JoinColumn(name = "equipe_id", nullable = false)
     private Equipe equipe;
 
     public Joueur() {}
 
-    public Joueur(String nom, String prenom, String position, int numero, Equipe equipe) {
+    public Joueur(String nom, String prenom, String position, int numero, int age, Equipe equipe) {
         this.nom = nom;
         this.prenom = prenom;
         this.position = position;
         this.numero = numero;
+        this.age = age;
         this.equipe = equipe;
     }
 
@@ -69,6 +73,14 @@ public class Joueur {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Equipe getEquipe() {
