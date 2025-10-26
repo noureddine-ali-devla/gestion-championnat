@@ -5,6 +5,7 @@ public class Equipe {
     private String nom;
     private String ville;
     private String email;
+    private Statistique statistique;
 
     public Equipe() {}
 
@@ -12,9 +13,9 @@ public class Equipe {
         this.nom = nom;
         this.ville = ville;
         this.email = email;
+        this.statistique = new Statistique(this);
     }
 
-    // Getters et Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -26,6 +27,9 @@ public class Equipe {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public Statistique getStatistique() { return statistique; }
+    public void setStatistique(Statistique statistique) { this.statistique = statistique; }
 }
 
 
