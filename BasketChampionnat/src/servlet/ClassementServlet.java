@@ -3,8 +3,8 @@ package servlet;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import service.ChampionnatService;
 import service.ClassementService;
+import service.ChampionnatService;
 import model.Statistique;
 import java.io.IOException;
 import java.util.List;
@@ -15,8 +15,9 @@ public class ClassementServlet extends HttpServlet {
     private ClassementService classementService = new ClassementService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Statistique> classement = classementService.genererClassement(championnatService.getEquipes());
+        List<Statistique> classement = classementService.getClassement();
         request.setAttribute("classement", classement);
         request.getRequestDispatcher("pages/classement.jsp").forward(request, response);
     }
 }
+
