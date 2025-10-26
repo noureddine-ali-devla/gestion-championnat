@@ -1,63 +1,58 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.ArrayList, java.util.List" %>
+<%@ page import="java.util.List" %>
 <%@ page import="model.Equipe" %>
+<%@ page import="dao.EquipeDAO" %>
+
+<%
+    EquipeDAO equipeDAO = new EquipeDAO();
+    List<Equipe> equipes = equipeDAO.listEquipes();
+%>
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Équipes</title>
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/assets/css/style.css">
+    <meta charset="UTF-8">
+    <title>Liste des Équipes</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .btn { text-decoration: none; padding: 5px 10px; background-color: #4CAF50; color: white; border-radius: 4px; }
+    </style>
 </head>
 <body>
-<%@ include file="/includes/header.jsp" %>
-
-<h2>Liste des équipes</h2>
-
-<%
-    // Hardcoded list of teams
-    List<Equipe> equipes = new ArrayList<>();
-    Equipe e1 = new Equipe("Tigers", "Paris", "tigers@example.com");
-    Equipe e2 = new Equipe("Lions", "Lyon", "lions@example.com");
-    
-    // Hardcoded coach and points
-    e1.setEmail("tigers@example.com"); // conservé
-    e2.setEmail("lions@example.com");
-
-    // Transient fields for JSP display
-    // On peut ajouter méthodes getEntraineur et getPoints directement si tu veux
-    equipes.add(e1);
-    equipes.add(e2);
-%>
-
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Ville</th>
-        <th>Entraîneur</th>
-        <th>Points</th>
-        <th>Actions</th>
-    </tr>
-<%
-    for (Equipe e : equipes) {
-        String entraineur = "Coach Hardcoded";
-        int points = 0;
-%>
-    <tr>
-        <td><%= e.getId() %></td>
-        <td><%= e.getNom() %></td>
-        <td><%= e.getVille() %></td>
-        <td><%= entraineur %></td>
-        <td><%= points %></td>
-        <td>
-            <a class="btn" href="#">Détails</a>
-            <a class="btn" href="#">Supprimer</a>
-        </td>
-    </tr>
-<%
-    }
-%>
-</table>
-
-<%@ include file="/includes/footer.jsp" %>
+    <h1>Liste des Équipes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Ville</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                for (Equipe e : equipes) {
+            %>
+            <tr>
+                <td><%= e.getId() %></td>
+                <td><%= e.getNom() %></td>
+                <td><%= e.getVille() %></td>
+                <td><%= e.getEmail() %></td>
+                <td>
+                    <a class="btn" href="edit.jsp?id=<%= e.getId() %>">Modifier</a>
+                    <a class="btn" href="delete.jsp?id=<%= e.getId() %>">Supprimer</a>
+                </td>
+            </tr>
+            <%
+                }
+            %>
+        </tbody>
+    </table>
+    <br/>
+    <a class="btn" href="add.jsp">Ajouter une nouvelle équipe</a>
 </body>
 </html>
+
 
