@@ -32,11 +32,6 @@ public class Statistique {
 
     public Statistique(Equipe equipe) {
         this.equipe = equipe;
-        this.matchsJoues = 0;
-        this.victoires = 0;
-        this.defaites = 0;
-        this.butsMarques = 0;
-        this.butsEncaisses = 0;
     }
 
     public int getId() {
@@ -99,3 +94,4 @@ public class Statistique {
         return victoires * 3;
     }
 }
+
