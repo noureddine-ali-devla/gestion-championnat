@@ -73,8 +73,8 @@ public class ChampionnatService {
         return matchDAO.findById(id);
     }
 
-    public void enregistrerScore(int idMatch, int scoreA, int scoreB) {
-        matchDAO.updateScore(idMatch, scoreA, scoreB);
+    public void enregistrerScore(int idMatch, int scoreDomicile, int scoreExterieur) {
+        matchDAO.updateScore(idMatch, scoreDomicile, scoreExterieur);
     }
 }
 
