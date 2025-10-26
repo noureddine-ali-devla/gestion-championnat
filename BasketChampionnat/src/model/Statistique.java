@@ -1,97 +1,69 @@
 package model;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "statistiques")
 public class Statistique {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @OneToOne
-    @JoinColumn(name = "equipe_id", nullable = false, unique = true)
     private Equipe equipe;
-
-    @Column(nullable = false)
     private int matchsJoues;
-
-    @Column(nullable = false)
     private int victoires;
-
-    @Column(nullable = false)
     private int defaites;
-
-    @Column(nullable = false)
-    private int butsMarques;
-
-    @Column(nullable = false)
-    private int butsEncaisses;
+    private int pointsMarques;
+    private int pointsEncaisses;
+    private int totalPoints; // for classement ranking
 
     public Statistique() {}
 
     public Statistique(Equipe equipe) {
         this.equipe = equipe;
+        this.matchsJoues = 0;
+        this.victoires = 0;
+        this.defaites = 0;
+        this.pointsMarques = 0;
+        this.pointsEncaisses = 0;
+        this.totalPoints = 0;
     }
 
-    public int getId() {
-        return id;
+    public Equipe getEquipe() { return equipe; }
+    public void setEquipe(Equipe equipe) { this.equipe = equipe; }
+
+    public int getMatchsJoues() { return matchsJoues; }
+    public void setMatchsJoues(int matchsJoues) { this.matchsJoues = matchsJoues; }
+
+    public int getVictoires() { return victoires; }
+    public void setVictoires(int victoires) { this.victoires = victoires; }
+
+    public int getDefaites() { return defaites; }
+    public void setDefaites(int defaites) { this.defaites = defaites; }
+
+    public int getPointsMarques() { return pointsMarques; }
+    public void setPointsMarques(int pointsMarques) { this.pointsMarques = pointsMarques; }
+
+    public int getPointsEncaisses() { return pointsEncaisses; }
+    public void setPointsEncaisses(int pointsEncaisses) { this.pointsEncaisses = pointsEncaisses; }
+
+    public int getTotalPoints() { return totalPoints; }
+    public void setTotalPoints(int totalPoints) { this.totalPoints = totalPoints; }
+
+    // Utility methods for updating stats
+    public void enregistrerMatch(int pointsPour, int pointsContre) {
+        matchsJoues++;
+        pointsMarques += pointsPour;
+        pointsEncaisses += pointsContre;
+
+        if (pointsPour > pointsContre) {
+            victoires++;
+            totalPoints += 2; // 2 points for a win
+        } else {
+            defaites++;
+            totalPoints += 1; // 1 point for a loss
+        }
     }
 
-    public Equipe getEquipe() {
-        return equipe;
-    }
-
-    public void setEquipe(Equipe equipe) {
-        this.equipe = equipe;
-    }
-
-    public int getMatchsJoues() {
-        return matchsJoues;
-    }
-
-    public void setMatchsJoues(int matchsJoues) {
-        this.matchsJoues = matchsJoues;
-    }
-
-    public int getVictoires() {
-        return victoires;
-    }
-
-    public void setVictoires(int victoires) {
-        this.victoires = victoires;
-    }
-
-    public int getDefaites() {
-        return defaites;
-    }
-
-    public void setDefaites(int defaites) {
-        this.defaites = defaites;
-    }
-
-    public int getButsMarques() {
-        return butsMarques;
-    }
-
-    public void setButsMarques(int butsMarques) {
-        this.butsMarques = butsMarques;
-    }
-
-    public int getButsEncaisses() {
-        return butsEncaisses;
-    }
-
-    public void setButsEncaisses(int butsEncaisses) {
-        this.butsEncaisses = butsEncaisses;
-    }
-
-    public int getDifferenceButs() {
-        return butsMarques - butsEncaisses;
-    }
-
-    public int getPoints() {
-        return victoires * 3;
+    @Override
+    public String toString() {
+        return String.format(
+            "Equipe: %s | MJ: %d | V: %d | D: %d | PM: %d | PE: %d | Pts: %d",
+            (equipe != null ? equipe.getNom() : "Inconnue"),
+            matchsJoues, victoires, defaites, pointsMarques, pointsEncaisses, totalPoints
+        );
     }
 }
 
