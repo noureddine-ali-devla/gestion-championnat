@@ -5,20 +5,14 @@ public class Statistique {
     private int matchsJoues;
     private int victoires;
     private int defaites;
-    private int pointsMarques;
-    private int pointsEncaisses;
-    private int totalPoints; // for classement ranking
+    private int butsMarques;
+    private int butsEncaisses;
+    private int points;
 
     public Statistique() {}
 
     public Statistique(Equipe equipe) {
         this.equipe = equipe;
-        this.matchsJoues = 0;
-        this.victoires = 0;
-        this.defaites = 0;
-        this.pointsMarques = 0;
-        this.pointsEncaisses = 0;
-        this.totalPoints = 0;
     }
 
     public Equipe getEquipe() { return equipe; }
@@ -33,37 +27,29 @@ public class Statistique {
     public int getDefaites() { return defaites; }
     public void setDefaites(int defaites) { this.defaites = defaites; }
 
-    public int getPointsMarques() { return pointsMarques; }
-    public void setPointsMarques(int pointsMarques) { this.pointsMarques = pointsMarques; }
+    public int getButsMarques() { return butsMarques; }
+    public void setButsMarques(int butsMarques) { this.butsMarques = butsMarques; }
 
-    public int getPointsEncaisses() { return pointsEncaisses; }
-    public void setPointsEncaisses(int pointsEncaisses) { this.pointsEncaisses = pointsEncaisses; }
+    public int getButsEncaisses() { return butsEncaisses; }
+    public void setButsEncaisses(int butsEncaisses) { this.butsEncaisses = butsEncaisses; }
 
-    public int getTotalPoints() { return totalPoints; }
-    public void setTotalPoints(int totalPoints) { this.totalPoints = totalPoints; }
+    public int getPoints() { return points; }
+    public void setPoints(int points) { this.points = points; }
 
-    // Utility methods for updating stats
-    public void enregistrerMatch(int pointsPour, int pointsContre) {
+    public int getDifferenceButs() {
+        return butsMarques - butsEncaisses;
+    }
+
+    public void enregistrerMatch(int marque, int encaisse, boolean victoire) {
         matchsJoues++;
-        pointsMarques += pointsPour;
-        pointsEncaisses += pointsContre;
-
-        if (pointsPour > pointsContre) {
+        butsMarques += marque;
+        butsEncaisses += encaisse;
+        if (victoire) {
             victoires++;
-            totalPoints += 2; // 2 points for a win
+            points += 2;
         } else {
             defaites++;
-            totalPoints += 1; // 1 point for a loss
+            points += 1;
         }
     }
-
-    @Override
-    public String toString() {
-        return String.format(
-            "Equipe: %s | MJ: %d | V: %d | D: %d | PM: %d | PE: %d | Pts: %d",
-            (equipe != null ? equipe.getNom() : "Inconnue"),
-            matchsJoues, victoires, defaites, pointsMarques, pointsEncaisses, totalPoints
-        );
-    }
 }
-
