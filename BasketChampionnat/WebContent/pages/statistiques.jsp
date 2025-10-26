@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*, model.Equipe, model.Statistique" %>
-<%@ include file="../includes/header.jsp" %>
+<%@ include file="/pages/includes/header.jsp" %>
 
 <section class="content-container">
     <div class="page-header">
