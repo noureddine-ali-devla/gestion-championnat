@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/pages/includes/header.jsp" %>
+<%@ include file="/includes/header.jsp" %>
 
 <section class="message-container">
     <div class="alert alert-success">
