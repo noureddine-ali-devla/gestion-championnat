@@ -21,11 +21,11 @@ public class JoueurServlet extends HttpServlet {
             request.setAttribute("joueurs", joueurs);
             request.setAttribute("equipes", equipes);
             request.getRequestDispatcher("pages/joueurs.jsp").forward(request, response);
-        } else if (action.equals("supprimer")) {
+        } else if ("supprimer".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             service.supprimerJoueur(id);
             response.sendRedirect("joueurs");
-        } else if (action.equals("details")) {
+        } else if ("details".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             Joueur j = service.getJoueurById(id);
             request.setAttribute("joueur", j);
@@ -40,7 +40,7 @@ public class JoueurServlet extends HttpServlet {
         int numero = Integer.parseInt(request.getParameter("numero"));
         int idEquipe = Integer.parseInt(request.getParameter("idEquipe"));
         Equipe equipe = service.getEquipeById(idEquipe);
-        Joueur j = new Joueur(nom, prenom, position, numero, 0, equipe);
+        Joueur j = new Joueur(nom, prenom, position, numero, equipe);
         service.ajouterJoueur(j);
         response.sendRedirect("joueurs");
     }
