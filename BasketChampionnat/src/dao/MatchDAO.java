@@ -1,70 +1,57 @@
 package dao;
 
+import model.Equipe;
 import model.Match;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import util.HibernateUtil;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MatchDAO {
 
-    public void save(Match match) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.persist(match);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
+    // Hardcoded list of matches
+    private static final List<Match> MATCHS = new ArrayList<>();
+
+    static {
+        // Exemple d'équipes
+        Equipe equipe1 = new Equipe("Lions", "Casablanca", "lions@example.com");
+        Equipe equipe2 = new Equipe("Tigers", "Rabat", "tigers@example.com");
+
+        // Exemple de matchs
+        Match m1 = new Match();
+        m1.setId(1);
+        m1.setEquipeDomicile(equipe1);
+        m1.setEquipeExterieur(equipe2);
+        m1.setDateMatch(new Date());
+        m1.setScoreDomicile(null);
+        m1.setScoreExterieur(null);
+        m1.setTermine(false);
+
+        Match m2 = new Match();
+        m2.setId(2);
+        m2.setEquipeDomicile(equipe2);
+        m2.setEquipeExterieur(equipe1);
+        m2.setDateMatch(new Date());
+        m2.setScoreDomicile(75);
+        m2.setScoreExterieur(68);
+        m2.setTermine(true);
+
+        MATCHS.add(m1);
+        MATCHS.add(m2);
     }
 
-    public void update(Match match) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.merge(match);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
+    public List<Match> listMatchs() {
+        return MATCHS;
     }
 
-    public void delete(int id) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            Match match = session.get(Match.class, id);
-            if (match != null) session.remove(match);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
-    }
-
-    public Match findById(int id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Match.class, id);
-        }
-    }
-
-    public List<Match> findAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Match> query = session.createQuery("from Match", Match.class);
-            return query.list();
-        }
-    }
-
-    public List<Match> findByEquipeId(int equipeId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Match> query = session.createQuery(
-                "from Match where equipeDomicile.id = :id or equipeExterieur.id = :id", Match.class);
-            query.setParameter("id", equipeId);
-            return query.list();
+    // Pour mettre à jour un score
+    public void updateScore(int id, Integer scoreDomicile, Integer scoreExterieur) {
+        for (Match m : MATCHS) {
+            if (m.getId() == id) {
+                m.setScoreDomicile(scoreDomicile);
+                m.setScoreExterieur(scoreExterieur);
+                m.setTermine(true);
+                break;
+            }
         }
     }
 }
