@@ -28,7 +28,6 @@
         <tr>
             <td><%= e.getNom() %></td>
             <td><%= e.getVille() %></td>
-            <td><%= e.getEntraineur() %></td>
         </tr>
         <%
             }
