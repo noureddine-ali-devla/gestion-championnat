@@ -59,7 +59,7 @@ public class ClassementService {
         }
     }
 
-    public List<Statistique> genererClassement() {
+    public List<Statistique> getClassement() {
         mettreAJourStatistiques();
         List<Equipe> equipes = equipeDAO.findAll();
         List<Statistique> classement = new ArrayList<>();
@@ -74,5 +74,6 @@ public class ClassementService {
         return classement;
     }
 }
+
 
 
