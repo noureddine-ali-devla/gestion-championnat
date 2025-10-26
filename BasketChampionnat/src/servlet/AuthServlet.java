@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/auth")
 public class AuthServlet extends HttpServlet {
 
     private UserDAO userDAO;
