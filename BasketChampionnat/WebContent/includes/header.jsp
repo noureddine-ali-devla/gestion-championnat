@@ -19,20 +19,10 @@
     <a href="<%= request.getContextPath() %>/matchs">Matchs</a>
     <a href="<%= request.getContextPath() %>/classement">Classement</a>
     <a href="<%= request.getContextPath() %>/dashboard.jsp">Tableau de Bord</a>
-    <%
-        model.User user = (model.User) session.getAttribute("user");
-        if (user == null) {
-    %>
-        <a href="<%= request.getContextPath() %>/login.jsp">Connexion</a>
-        <a href="<%= request.getContextPath() %>/register.jsp">Inscription</a>
-    <%
-        } else {
-    %>
-        <span style="margin-left:auto; margin-right:20px; font-weight:600;">Bienvenue, <%= user.getUsername() %></span>
-        <a href="<%= request.getContextPath() %>/logout">Déconnexion</a>
-    <%
-        }
-    %>
+    
+    <!-- Hardcoded user always logged in -->
+    <span style="margin-left:auto; margin-right:20px; font-weight:600;">Bienvenue, admin</span>
+    <a href="<%= request.getContextPath() %>/logout">Déconnexion</a>
 </nav>
 
 <main>
