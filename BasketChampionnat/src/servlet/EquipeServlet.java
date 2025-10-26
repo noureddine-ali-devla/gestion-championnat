@@ -10,7 +10,7 @@ import java.util.List;
 
 @WebServlet("/equipes")
 public class EquipeServlet extends HttpServlet {
-    private final ChampionnatService service = new ChampionnatService();
+    private ChampionnatService service = new ChampionnatService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -33,9 +33,11 @@ public class EquipeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nom = request.getParameter("nom");
         String ville = request.getParameter("ville");
-        Equipe e = new Equipe(nom, ville);
+        String entraineur = request.getParameter("entraineur");
+        Equipe e = new Equipe(nom, ville, entraineur);
         service.ajouterEquipe(e);
         response.sendRedirect("equipes");
     }
 }
+
 
