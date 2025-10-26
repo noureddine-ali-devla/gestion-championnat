@@ -11,7 +11,7 @@ import java.util.List;
 
 @WebServlet("/joueurs")
 public class JoueurServlet extends HttpServlet {
-    private final ChampionnatService service = new ChampionnatService();
+    private ChampionnatService service = new ChampionnatService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -40,9 +40,10 @@ public class JoueurServlet extends HttpServlet {
         int numero = Integer.parseInt(request.getParameter("numero"));
         int idEquipe = Integer.parseInt(request.getParameter("idEquipe"));
         Equipe equipe = service.getEquipeById(idEquipe);
-        Joueur j = new Joueur(nom, prenom, position, numero, equipe);
+        Joueur j = new Joueur(nom, prenom, position, numero, 0, equipe);
         service.ajouterJoueur(j);
         response.sendRedirect("joueurs");
     }
 }
+
 
