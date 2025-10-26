@@ -2,7 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Equipe" %>
 <%@ page import="dao.EquipeDAO" %>
-<%@ include file="/pages/includes/header.jsp" %>
+<%@ include file="/includes/header.jsp" %>
 
 
 <html>
