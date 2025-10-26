@@ -6,41 +6,80 @@ public class Match {
     private int id;
     private Equipe equipeDomicile;
     private Equipe equipeExterieur;
-    private LocalDate date;
+    private LocalDate dateMatch;
     private int scoreDomicile;
     private int scoreExterieur;
-    private boolean joue;
+    private boolean termine;
 
-    public Match() {}
-
-    public Match(Equipe equipeDomicile, Equipe equipeExterieur, LocalDate date, int scoreDomicile, int scoreExterieur, boolean joue) {
-        this.equipeDomicile = equipeDomicile;
-        this.equipeExterieur = equipeExterieur;
-        this.date = date;
-        this.scoreDomicile = scoreDomicile;
-        this.scoreExterieur = scoreExterieur;
-        this.joue = joue;
+    public Match() {
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Match(Equipe equipeDomicile, Equipe equipeExterieur, LocalDate dateMatch,
+                 int scoreDomicile, int scoreExterieur, boolean termine) {
+        this.equipeDomicile = equipeDomicile;
+        this.equipeExterieur = equipeExterieur;
+        this.dateMatch = dateMatch;
+        this.scoreDomicile = scoreDomicile;
+        this.scoreExterieur = scoreExterieur;
+        this.termine = termine;
+    }
 
-    public Equipe getEquipeDomicile() { return equipeDomicile; }
-    public void setEquipeDomicile(Equipe equipeDomicile) { this.equipeDomicile = equipeDomicile; }
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
 
-    public Equipe getEquipeExterieur() { return equipeExterieur; }
-    public void setEquipeExterieur(Equipe equipeExterieur) { this.equipeExterieur = equipeExterieur; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
+    public Equipe getEquipeDomicile() {
+        return equipeDomicile;
+    }
 
-    public int getScoreDomicile() { return scoreDomicile; }
-    public void setScoreDomicile(int scoreDomicile) { this.scoreDomicile = scoreDomicile; }
+    public void setEquipeDomicile(Equipe equipeDomicile) {
+        this.equipeDomicile = equipeDomicile;
+    }
 
-    public int getScoreExterieur() { return scoreExterieur; }
-    public void setScoreExterieur(int scoreExterieur) { this.scoreExterieur = scoreExterieur; }
+    public Equipe getEquipeExterieur() {
+        return equipeExterieur;
+    }
 
-    public boolean isJoue() { return joue; }
-    public void setJoue(boolean joue) { this.joue = joue; }
+    public void setEquipeExterieur(Equipe equipeExterieur) {
+        this.equipeExterieur = equipeExterieur;
+    }
+
+    public LocalDate getDateMatch() {
+        return dateMatch;
+    }
+
+    public void setDateMatch(LocalDate dateMatch) {
+        this.dateMatch = dateMatch;
+    }
+
+    public int getScoreDomicile() {
+        return scoreDomicile;
+    }
+
+    public void setScoreDomicile(int scoreDomicile) {
+        this.scoreDomicile = scoreDomicile;
+    }
+
+    public int getScoreExterieur() {
+        return scoreExterieur;
+    }
+
+    public void setScoreExterieur(int scoreExterieur) {
+        this.scoreExterieur = scoreExterieur;
+    }
+
+    public boolean isTermine() {
+        return termine;
+    }
+
+    public void setTermine(boolean termine) {
+        this.termine = termine;
+    }
 }
+
 
