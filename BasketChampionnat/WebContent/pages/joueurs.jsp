@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <%@ include file="/pages/includes/header.jsp" %>
+    <%@ include file="/includes/header.jsp" %>
 
     <div class="container">
         <h2>Liste des Joueurs</h2>
