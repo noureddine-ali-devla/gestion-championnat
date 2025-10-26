@@ -18,11 +18,11 @@ public class EquipeServlet extends HttpServlet {
             List<Equipe> equipes = service.getEquipes();
             request.setAttribute("equipes", equipes);
             request.getRequestDispatcher("pages/equipes.jsp").forward(request, response);
-        } else if (action.equals("supprimer")) {
+        } else if ("supprimer".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             service.supprimerEquipe(id);
             response.sendRedirect("equipes");
-        } else if (action.equals("details")) {
+        } else if ("details".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             Equipe e = service.getEquipeById(id);
             request.setAttribute("equipe", e);
