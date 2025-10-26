@@ -1,11 +1,6 @@
 package filter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +17,7 @@ public class AuthFilter implements Filter {
     };
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) {}
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -33,9 +28,10 @@ public class AuthFilter implements Filter {
         HttpSession session = req.getSession(false);
 
         String path = req.getRequestURI().substring(req.getContextPath().length());
+
         boolean excluded = false;
-        for (String excludedPath : EXCLUDED_PATHS) {
-            if (path.startsWith(excludedPath)) {
+        for (String p : EXCLUDED_PATHS) {
+            if (path.startsWith(p)) {
                 excluded = true;
                 break;
             }
