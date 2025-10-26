@@ -10,7 +10,7 @@ import java.util.List;
 
 @WebServlet("/equipes")
 public class EquipeServlet extends HttpServlet {
-    private ChampionnatService service = new ChampionnatService();
+    private final ChampionnatService service = new ChampionnatService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -20,7 +20,7 @@ public class EquipeServlet extends HttpServlet {
             request.getRequestDispatcher("pages/equipes.jsp").forward(request, response);
         } else if (action.equals("supprimer")) {
             int id = Integer.parseInt(request.getParameter("id"));
-            service.getEquipes().removeIf(e -> e.getId() == id);
+            service.supprimerEquipe(id);
             response.sendRedirect("equipes");
         } else if (action.equals("details")) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -33,10 +33,9 @@ public class EquipeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nom = request.getParameter("nom");
         String ville = request.getParameter("ville");
-        String entraineur = request.getParameter("entraineur");
-        int id = service.getEquipes().size() + 1;
-        Equipe e = new Equipe(id, nom, ville, entraineur);
+        Equipe e = new Equipe(nom, ville);
         service.ajouterEquipe(e);
         response.sendRedirect("equipes");
     }
 }
+
