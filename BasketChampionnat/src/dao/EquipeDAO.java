@@ -5,50 +5,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EquipeDAO {
-
-    private static final List<Equipe> EQUIPES = new ArrayList<>();
+    private static final List<Equipe> equipes = new ArrayList<>();
 
     static {
-        Equipe e1 = new Equipe("Lions", "Casablanca", "lions@example.com");
-        e1.setId(1);
-        Equipe e2 = new Equipe("Tigers", "Rabat", "tigers@example.com");
-        e2.setId(2);
-        Equipe e3 = new Equipe("Bulls", "Marrakech", "bulls@example.com");
-        e3.setId(3);
-
-        EQUIPES.add(e1);
-        EQUIPES.add(e2);
-        EQUIPES.add(e3);
+        equipes.add(new Equipe("Lions", "Casablanca", "lions@example.com"));
+        equipes.add(new Equipe("Tigers", "Rabat", "tigers@example.com"));
+        equipes.add(new Equipe("Eagles", "Marrakech", "eagles@example.com"));
     }
 
-    public List<Equipe> listEquipes() {
-        return EQUIPES;
-    }
+    public List<Equipe> findAll() { return equipes; }
 
     public Equipe findById(int id) {
-        for (Equipe e : EQUIPES) {
+        for (Equipe e : equipes) {
             if (e.getId() == id) return e;
         }
         return null;
     }
 
-    public void save(Equipe equipe) {
-        int newId = EQUIPES.size() + 1;
-        equipe.setId(newId);
-        EQUIPES.add(equipe);
-    }
+    public void save(Equipe equipe) { equipes.add(equipe); }
 
     public void update(Equipe equipe) {
-        Equipe existing = findById(equipe.getId());
-        if (existing != null) {
-            existing.setNom(equipe.getNom());
-            existing.setVille(equipe.getVille());
-            existing.setEmail(equipe.getEmail());
+        for (int i = 0; i < equipes.size(); i++) {
+            if (equipes.get(i).getId() == equipe.getId()) {
+                equipes.set(i, equipe);
+                break;
+            }
         }
     }
 
     public void delete(int id) {
-        EQUIPES.removeIf(e -> e.getId() == id);
+        equipes.removeIf(e -> e.getId() == id);
     }
 }
+
 
