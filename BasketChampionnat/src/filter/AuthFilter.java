@@ -1,21 +1,32 @@
 package filter;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
+@WebFilter("/*")
 public class AuthFilter implements Filter {
 
+    // Pages publiques à exclure du filtrage
     private static final String[] EXCLUDED_PATHS = {
-        "/login.jsp",
-        "/register.jsp",
+        "/pages/login.jsp",
+        "/pages/register.jsp",
         "/auth",
         "/assets/",
         "/logout"
     };
 
     @Override
-    public void init(FilterConfig filterConfig) { }
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -24,6 +35,8 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
+
+        // Chemin relatif au contexte
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
         boolean excluded = false;
@@ -34,9 +47,10 @@ public class AuthFilter implements Filter {
             }
         }
 
+        // Vérifie l’authentification si ce n’est pas une page exclue
         if (!excluded) {
             if (session == null || session.getAttribute("user") == null) {
-                res.sendRedirect(req.getContextPath() + "/login.jsp");
+                res.sendRedirect(req.getContextPath() + "/pages/login.jsp");
                 return;
             }
         }
@@ -45,6 +59,6 @@ public class AuthFilter implements Filter {
     }
 
     @Override
-    public void destroy() { }
+    public void destroy() {
+    }
 }
-
