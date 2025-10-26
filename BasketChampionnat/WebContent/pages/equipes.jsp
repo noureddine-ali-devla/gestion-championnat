@@ -1,46 +1,40 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.Equipe" %>
 <%@ page import="dao.EquipeDAO" %>
-<%@ include file="/includes/header.jsp" %>
+<%@ page import="model.Equipe" %>
 
+<jsp:include page="/includes/header.jsp" />
 
-<html>
-<head>
-    <title>Gestion des Équipes</title>
-</head>
-<body>
-    <h1>Liste des Équipes</h1>
-    <a href="ajouterEquipe.jsp" class="btn">Ajouter une équipe</a>
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Ville</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%
-                EquipeDAO equipeDAO = new EquipeDAO();
-                List<Equipe> equipes = equipeDAO.listEquipes();
-                for (Equipe e : equipes) {
-            %>
-            <tr>
-                <td><%= e.getId() %></td>
-                <td><a href="detailsEquipe.jsp?id=<%= e.getId() %>"><%= e.getNom() %></a></td>
-                <td><%= e.getVille() %></td>
-                <td><%= e.getEmail() %></td>
-                <td>
-                    <a href="modifierEquipe.jsp?id=<%= e.getId() %>">Modifier</a>
-                </td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
-</body>
-</html>
+<h2>Liste des équipes</h2>
+
+<%
+    // Récupérer la liste des équipes
+    EquipeDAO equipeDAO = new EquipeDAO();
+    List<Equipe> equipes = equipeDAO.findAll(); // utiliser findAll() correspondant au DAO
+%>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Ville</th>
+            <th>Entraîneur</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%
+            for (Equipe e : equipes) {
+        %>
+        <tr>
+            <td><%= e.getNom() %></td>
+            <td><%= e.getVille() %></td>
+            <td><%= e.getEntraineur() %></td>
+        </tr>
+        <%
+            }
+        %>
+    </tbody>
+</table>
+
 
 
