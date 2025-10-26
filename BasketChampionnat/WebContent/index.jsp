@@ -14,22 +14,18 @@
     <div class="grid-features">
         <div class="card">
             <h3>Gestion des Équipes</h3>
-            <p>Ajoutez, modifiez ou supprimez des équipes, visualisez leurs détails et leurs performances.</p>
             <a href="pages/equipes.jsp" class="btn">Gérer les Équipes</a>
         </div>
         <div class="card">
             <h3>Gestion des Joueurs</h3>
-            <p>Administrez les joueurs, leurs informations personnelles et leur appartenance aux équipes.</p>
             <a href="pages/joueurs.jsp" class="btn">Gérer les Joueurs</a>
         </div>
         <div class="card">
             <h3>Planification des Matchs</h3>
-            <p>Organisez les rencontres, saisissez les scores et suivez l’évolution des résultats.</p>
             <a href="pages/matchs.jsp" class="btn">Gérer les Matchs</a>
         </div>
         <div class="card">
             <h3>Classement et Statistiques</h3>
-            <p>Consultez le classement actualisé, les statistiques par équipe et les performances globales.</p>
             <a href="pages/classement.jsp" class="btn">Voir le Classement</a>
         </div>
     </div>
@@ -37,11 +33,11 @@
 
 <section class="cta-section">
     <h2>Prêt à commencer ?</h2>
-    <p>Connectez-vous pour accéder à toutes les fonctionnalités de gestion du championnat.</p>
     <a href="pages/register.jsp" class="btn">Créer un compte</a>
 </section>
 
 <%@ include file="includes/footer.jsp" %>
+
 
 
 
