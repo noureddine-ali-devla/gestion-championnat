@@ -1,57 +1,69 @@
 package dao;
 
 import model.Equipe;
-import model.Match;
-import java.util.ArrayList;
-import java.util.Date;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import util.HibernateUtil;
 import java.util.List;
 
-public class MatchDAO {
+public class EquipeDAO {
 
-    // Hardcoded list of matches
-    private static final List<Match> MATCHS = new ArrayList<>();
-
-    static {
-        // Exemple d'équipes
-        Equipe equipe1 = new Equipe("Lions", "Casablanca", "lions@example.com");
-        Equipe equipe2 = new Equipe("Tigers", "Rabat", "tigers@example.com");
-
-        // Exemple de matchs
-        Match m1 = new Match();
-        m1.setId(1);
-        m1.setEquipeDomicile(equipe1);
-        m1.setEquipeExterieur(equipe2);
-        m1.setDateMatch(new Date());
-        m1.setScoreDomicile(null);
-        m1.setScoreExterieur(null);
-        m1.setTermine(false);
-
-        Match m2 = new Match();
-        m2.setId(2);
-        m2.setEquipeDomicile(equipe2);
-        m2.setEquipeExterieur(equipe1);
-        m2.setDateMatch(new Date());
-        m2.setScoreDomicile(75);
-        m2.setScoreExterieur(68);
-        m2.setTermine(true);
-
-        MATCHS.add(m1);
-        MATCHS.add(m2);
+    public void save(Equipe equipe) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.persist(equipe);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
     }
 
-    public List<Match> listMatchs() {
-        return MATCHS;
+    public void update(Equipe equipe) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.merge(equipe);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
     }
 
-    // Pour mettre à jour un score
-    public void updateScore(int id, Integer scoreDomicile, Integer scoreExterieur) {
-        for (Match m : MATCHS) {
-            if (m.getId() == id) {
-                m.setScoreDomicile(scoreDomicile);
-                m.setScoreExterieur(scoreExterieur);
-                m.setTermine(true);
-                break;
-            }
+    public void delete(int id) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Equipe equipe = session.get(Equipe.class, id);
+            if (equipe != null) session.remove(equipe);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
+    }
+
+    public Equipe findById(int id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Equipe.class, id);
+        }
+    }
+
+    public List<Equipe> findAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Equipe> query = session.createQuery("from Equipe", Equipe.class);
+            return query.list();
+        }
+    }
+
+    public Equipe findByName(String nom) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Equipe> query = session.createQuery("from Equipe where nom = :nom", Equipe.class);
+            query.setParameter("nom", nom);
+            return query.uniqueResult();
         }
     }
 }
