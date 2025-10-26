@@ -16,6 +16,9 @@ public class Equipe {
     @Column(nullable = false)
     private String ville;
 
+    @Column(nullable = false)
+    private String email;
+
     @OneToMany(mappedBy = "equipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Joueur> joueurs;
 
@@ -30,9 +33,10 @@ public class Equipe {
 
     public Equipe() {}
 
-    public Equipe(String nom, String ville) {
+    public Equipe(String nom, String ville, String email) {
         this.nom = nom;
         this.ville = ville;
+        this.email = email;
     }
 
     public int getId() {
@@ -53,6 +57,14 @@ public class Equipe {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Joueur> getJoueurs() {
@@ -87,3 +99,4 @@ public class Equipe {
         this.statistique = statistique;
     }
 }
+
