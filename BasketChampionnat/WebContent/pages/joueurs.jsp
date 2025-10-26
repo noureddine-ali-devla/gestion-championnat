@@ -2,45 +2,62 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Joueur" %>
 <%@ page import="dao.JoueurDAO" %>
-<%@ include file="../header.jsp" %>
 
-<html>
+<%
+    JoueurDAO joueurDAO = new JoueurDAO();
+    List<Joueur> joueurs = joueurDAO.getAllJoueurs(); // méthode correcte du DAO
+%>
+
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <title>Gestion des Joueurs</title>
+    <meta charset="UTF-8">
+    <title>Liste des Joueurs</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <h1>Liste des Joueurs</h1>
-    <a href="ajouterJoueur.jsp" class="btn">Ajouter un joueur</a>
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Équipe</th>
-                <th>Poste</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%
-                JoueurDAO joueurDAO = new JoueurDAO();
-                List<Joueur> joueurs = joueurDAO.listJoueurs();
-                for (Joueur j : joueurs) {
-            %>
-            <tr>
-                <td><%= j.getId() %></td>
-                <td><a href="detailsJoueur.jsp?id=<%= j.getId() %>"><%= j.getNom() %></a></td>
-                <td><%= j.getPrenom() %></td>
-                <td><%= j.getEquipe() != null ? j.getEquipe().getNom() : "-" %></td>
-                <td><%= j.getPoste() %></td>
-                <td>
-                    <a href="modifierJoueur.jsp?id=<%= j.getId() %>">Modifier</a>
-                </td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
+    <%@ include file="/pages/includes/header.jsp" %>
+
+    <div class="container">
+        <h2>Liste des Joueurs</h2>
+
+        <table border="1" cellpadding="10" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Position</th>
+                    <th>Numéro</th>
+                    <th>Équipe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                    if (joueurs != null && !joueurs.isEmpty()) {
+                        for (Joueur j : joueurs) {
+                %>
+                <tr>
+                    <td><%= j.getId() %></td>
+                    <td><%= j.getNom() %></td>
+                    <td><%= j.getPrenom() %></td>
+                    <td><%= j.getPosition() %></td>
+                    <td><%= j.getNumero() %></td>
+                    <td><%= j.getEquipe() != null ? j.getEquipe().getNom() : "-" %></td>
+                </tr>
+                <%
+                        }
+                    } else {
+                %>
+                <tr>
+                    <td colspan="6" style="text-align:center;">Aucun joueur trouvé.</td>
+                </tr>
+                <%
+                    }
+                %>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
 
