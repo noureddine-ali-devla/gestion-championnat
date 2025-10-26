@@ -21,14 +21,11 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        if ("logout".equals(action)) {
-            HttpSession session = request.getSession(false);
-            if (session != null) session.invalidate();
-            response.sendRedirect("pages/login.jsp");
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            response.sendRedirect(request.getContextPath() + "/pages/dashboard.jsp");
         } else {
-            request.getRequestDispatcher("pages/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
         }
     }
 
@@ -41,21 +38,22 @@ public class AuthServlet extends HttpServlet {
 
         if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
             request.setAttribute("error", "Veuillez remplir tous les champs.");
-            request.getRequestDispatcher("pages/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
             return;
         }
 
         User user = userDAO.authenticate(username, password);
 
         if (user != null) {
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
-            response.sendRedirect("pages/dashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/pages/dashboard.jsp");
         } else {
             request.setAttribute("error", "Nom d’utilisateur ou mot de passe incorrect.");
-            request.getRequestDispatcher("pages/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
         }
     }
 }
+
 
 
