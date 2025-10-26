@@ -7,52 +7,15 @@
 
     <display-name>BasketChampionnat</display-name>
 
-    <!-- Filtre d'authentification -->
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>filter.AuthFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-    <!-- Servlets -->
-    <servlet>
-        <servlet-name>EquipeServlet</servlet-name>
-        <servlet-class>servlet.EquipeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EquipeServlet</servlet-name>
-        <url-pattern>/equipes</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>JoueurServlet</servlet-name>
-        <servlet-class>servlet.JoueurServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>JoueurServlet</servlet-name>
-        <url-pattern>/joueurs</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>MatchServlet</servlet-name>
-        <servlet-class>servlet.MatchServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MatchServlet</servlet-name>
-        <url-pattern>/matchs</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ClassementServlet</servlet-name>
-        <servlet-class>servlet.ClassementServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ClassementServlet</servlet-name>
-        <url-pattern>/classement</url-pattern>
-    </servlet-mapping>
 
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
@@ -63,21 +26,10 @@
         <url-pattern>/auth</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>servlet.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-
-    <!-- Page d'accueil -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Pages d'erreur -->
     <error-page>
         <error-code>404</error-code>
         <location>/pages/erreur.jsp</location>
@@ -87,7 +39,6 @@
         <error-code>500</error-code>
         <location>/pages/erreur.jsp</location>
     </error-page>
-
 </web-app>
 
 
