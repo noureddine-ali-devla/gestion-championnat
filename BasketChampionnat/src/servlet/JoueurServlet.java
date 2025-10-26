@@ -11,7 +11,7 @@ import java.util.List;
 
 @WebServlet("/joueurs")
 public class JoueurServlet extends HttpServlet {
-    private ChampionnatService service = new ChampionnatService();
+    private final ChampionnatService service = new ChampionnatService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -23,7 +23,7 @@ public class JoueurServlet extends HttpServlet {
             request.getRequestDispatcher("pages/joueurs.jsp").forward(request, response);
         } else if (action.equals("supprimer")) {
             int id = Integer.parseInt(request.getParameter("id"));
-            service.getJoueurs().removeIf(j -> j.getId() == id);
+            service.supprimerJoueur(id);
             response.sendRedirect("joueurs");
         } else if (action.equals("details")) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -40,9 +40,9 @@ public class JoueurServlet extends HttpServlet {
         int numero = Integer.parseInt(request.getParameter("numero"));
         int idEquipe = Integer.parseInt(request.getParameter("idEquipe"));
         Equipe equipe = service.getEquipeById(idEquipe);
-        int id = service.getJoueurs().size() + 1;
-        Joueur j = new Joueur(id, nom, prenom, position, numero, equipe);
+        Joueur j = new Joueur(nom, prenom, position, numero, equipe);
         service.ajouterJoueur(j);
         response.sendRedirect("joueurs");
     }
 }
+
