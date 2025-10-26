@@ -14,15 +14,26 @@
 
 <nav>
     <a href="<%= request.getContextPath() %>/index.jsp">Accueil</a>
-    <a href="<%= request.getContextPath() %>/equipes">Équipes</a>
-    <a href="<%= request.getContextPath() %>/joueurs">Joueurs</a>
-    <a href="<%= request.getContextPath() %>/matchs">Matchs</a>
-    <a href="<%= request.getContextPath() %>/classement">Classement</a>
+    <a href="<%= request.getContextPath() %>/pages/equipes.jsp">Équipes</a>
+    <a href="<%= request.getContextPath() %>/pages/joueurs.jsp">Joueurs</a>
+    <a href="<%= request.getContextPath() %>/pages/matchs.jsp">Matchs</a>
+    <a href="<%= request.getContextPath() %>/pages/classement.jsp">Classement</a>
     <a href="<%= request.getContextPath() %>/dashboard.jsp">Tableau de Bord</a>
-    
-    <!-- Hardcoded user always logged in -->
-    <span style="margin-left:auto; margin-right:20px; font-weight:600;">Bienvenue, admin</span>
-    <a href="<%= request.getContextPath() %>/logout">Déconnexion</a>
+
+    <%
+        Object user = session.getAttribute("user");
+        if (user == null) {
+    %>
+        <a href="<%= request.getContextPath() %>/pages/login.jsp">Connexion</a>
+        <a href="<%= request.getContextPath() %>/pages/register.jsp">Inscription</a>
+    <%
+        } else {
+    %>
+        <span style="margin-left:auto; margin-right:20px; font-weight:600;">Bienvenue, <%= user.toString() %></span>
+        <a href="<%= request.getContextPath() %>/logout">Déconnexion</a>
+    <%
+        }
+    %>
 </nav>
 
 <main>
