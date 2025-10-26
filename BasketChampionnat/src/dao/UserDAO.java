@@ -1,71 +1,45 @@
-package dao;
+package servlet;
 
+import dao.UserDAO;
 import model.User;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import util.HibernateUtil;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 
-import java.util.List;
+@WebServlet("/auth")
+public class AuthServlet extends HttpServlet {
 
-public class UserDAO {
-
-    public void save(User user) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.persist(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
     }
 
-    public User findByUsername(String username) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<User> query = session.createQuery("FROM User WHERE username = :username", User.class);
-            query.setParameter("username", username);
-            return query.uniqueResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    public User authenticate(String username, String password) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<User> query = session.createQuery("FROM User WHERE username = :username AND password = :password", User.class);
-            query.setParameter("username", username);
-            query.setParameter("password", password);
-            return query.uniqueResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-    public List<User> getAllUsers() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM User", User.class).list();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+        String hardUser = "admin";
+        String hardPass = "admin123";
 
-    public void delete(Long id) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            User user = session.get(User.class, id);
-            if (user != null) {
-                session.remove(user);
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+        if (hardUser.equals(username) && hardPass.equals(password)) {
+            HttpSession session = request.getSession(true);
+            User user = new User();
+            user.setUsername(hardUser);
+            session.setAttribute("user", user);
+            response.sendRedirect(request.getContextPath() + "/pages/dashboard.jsp");
+            return;
         }
+
+        request.setAttribute("error", "Nom d’utilisateur ou mot de passe incorrect.");
+        request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
     }
 }
+
