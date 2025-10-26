@@ -74,7 +74,12 @@ public class ChampionnatService {
     }
 
     public void enregistrerScore(int idMatch, int scoreDomicile, int scoreExterieur) {
-        matchDAO.updateScore(idMatch, scoreDomicile, scoreExterieur);
+        Match match = matchDAO.findById(idMatch);
+        if (match != null) {
+            match.setScoreDomicile(scoreDomicile);
+            match.setScoreExterieur(scoreExterieur);
+            matchDAO.update(match);
+        }
     }
 }
 
