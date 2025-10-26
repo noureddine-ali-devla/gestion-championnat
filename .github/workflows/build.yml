@@ -1,16 +1,20 @@
-name: Build Java WebApp
+name: Build & Test Java WebApp (Hibernate + JSP)
 
 on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Java
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'temurin'
-      - name: Compile Project
-        run: javac $(find src -name "*.java")
+          java-version: '17'
+
+      - name: Build with Maven
+        run: mvn -B clean compile
