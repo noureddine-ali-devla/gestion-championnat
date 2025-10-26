@@ -48,6 +48,7 @@
         <url-pattern>/matchs</url-pattern>
     </servlet-mapping>
 
+    <!-- ClassementServlet : uniquement via web.xml, supprime l’annotation @WebServlet dans le code -->
     <servlet>
         <servlet-name>ClassementServlet</servlet-name>
         <servlet-class>servlet.ClassementServlet</servlet-class>
