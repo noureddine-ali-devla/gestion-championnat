@@ -1,50 +1,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.Equipe, model.Joueur, model.Match, java.util.*" %>
-<%@ include file="../includes/header.jsp" %>
-
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="dao.UserDAO" %>
 <%
-    List<Equipe> equipes = (List<Equipe>) request.getAttribute("equipes");
-    List<Joueur> joueurs = (List<Joueur>) request.getAttribute("joueurs");
-    List<Match> matchs = (List<Match>) request.getAttribute("matchs");
-    int nbEquipes = (equipes != null) ? equipes.size() : 0;
-    int nbJoueurs = (joueurs != null) ? joueurs.size() : 0;
-    int nbMatchs = (matchs != null) ? matchs.size() : 0;
+    HttpSession session = request.getSession();
+    String username = (String) session.getAttribute("user");
+    if (username == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
 %>
+<html>
+<head>
+    <title>Dashboard - BasketChampionnat</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
+</head>
+<body>
+<header>
+    <h1>Tableau de Bord</h1>
+    <p>Bienvenue, <%= username %></p>
+    <a href="<%= request.getContextPath() %>/logout">Déconnexion</a>
+</header>
 
-<section class="dashboard-container">
-    <h2>Tableau de bord du Championnat</h2>
+<main>
+    <h2>Administration</h2>
+    <ul>
+        <li><a href="<%= request.getContextPath() %>/pages/equipes.jsp">Gérer les équipes</a></li>
+        <li><a href="<%= request.getContextPath() %>/pages/joueurs.jsp">Gérer les joueurs</a></li>
+        <li><a href="<%= request.getContextPath() %>/pages/matchs.jsp">Gérer les matchs</a></li>
+        <li><a href="<%= request.getContextPath() %>/pages/classement.jsp">Voir le classement</a></li>
+    </ul>
+</main>
+</body>
+</html>
 
-    <div class="dashboard-grid">
-        <div class="card">
-            <h3>Équipes</h3>
-            <p><strong><%= nbEquipes %></strong> enregistrées</p>
-            <a href="<%= request.getContextPath() %>/equipes" class="btn-small">Gérer</a>
-        </div>
-
-        <div class="card">
-            <h3>Joueurs</h3>
-            <p><strong><%= nbJoueurs %></strong> inscrits</p>
-            <a href="<%= request.getContextPath() %>/joueurs" class="btn-small">Gérer</a>
-        </div>
-
-        <div class="card">
-            <h3>Matchs</h3>
-            <p><strong><%= nbMatchs %></strong> programmés</p>
-            <a href="<%= request.getContextPath() %>/matchs" class="btn-small">Gérer</a>
-        </div>
-
-        <div class="card">
-            <h3>Classement</h3>
-            <p>Consulter les performances</p>
-            <a href="<%= request.getContextPath() %>/pages/classement.jsp" class="btn-small">Voir</a>
-        </div>
-
-        <div class="card">
-            <h3>Statistiques</h3>
-            <p>Analyse complète du championnat</p>
-            <a href="<%= request.getContextPath() %>/pages/statistiques.jsp" class="btn-small">Consulter</a>
-        </div>
-    </div>
-</section>
-
-<%@ include file="../includes/footer.jsp" %>
