@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import model.Statistique;
 
-@WebServlet("/classement")
 public class ClassementServlet extends HttpServlet {
     private ClassementService classementService = new ClassementService();
 
