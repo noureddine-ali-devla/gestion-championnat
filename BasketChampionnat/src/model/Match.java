@@ -27,14 +27,18 @@ public class Match {
     @Column(nullable = false)
     private int scoreExterieur;
 
+    @Column(nullable = false)
+    private String lieu;
+
     public Match() {}
 
-    public Match(Equipe equipeDomicile, Equipe equipeExterieur, LocalDate dateMatch, int scoreDomicile, int scoreExterieur) {
+    public Match(Equipe equipeDomicile, Equipe equipeExterieur, LocalDate dateMatch, int scoreDomicile, int scoreExterieur, String lieu) {
         this.equipeDomicile = equipeDomicile;
         this.equipeExterieur = equipeExterieur;
         this.dateMatch = dateMatch;
         this.scoreDomicile = scoreDomicile;
         this.scoreExterieur = scoreExterieur;
+        this.lieu = lieu;
     }
 
     public int getId() {
@@ -80,5 +84,14 @@ public class Match {
     public void setScoreExterieur(int scoreExterieur) {
         this.scoreExterieur = scoreExterieur;
     }
+
+    public String getLieu() {
+        return lieu;
+    }
+
+    public void setLieu(String lieu) {
+        this.lieu = lieu;
+    }
 }
+
 
