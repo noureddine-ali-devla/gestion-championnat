@@ -14,8 +14,6 @@
         <button type="submit">Se connecter</button>
     </form>
 
-    <a href="<%= request.getContextPath() %>/pages/register.jsp" class="btn-link">Créer un compte</a>
-
     <%
         String error = (String) request.getAttribute("error");
         if (error != null) {
@@ -27,5 +25,6 @@
 </section>
 
 <%@ include file="../includes/footer.jsp" %>
+
 
 
