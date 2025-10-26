@@ -1,64 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
-                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
-         version="5.0">
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
 
-    <!-- Welcome file -->
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
+    <!-- Context Param -->
+    <context-param>
+        <param-name>appName</param-name>
+        <param-value>BasketChampionnat</param-value>
+    </context-param>
+
+    <!-- Session Config -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
     <!-- Servlets -->
     <servlet>
         <servlet-name>MatchServlet</servlet-name>
-        <servlet-class>servlet.MatchServlet</servlet-class>
+        <servlet-class>src.servlet.MatchServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>EquipeServlet</servlet-name>
+        <servlet-class>src.servlet.EquipeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>JoueurServlet</servlet-name>
+        <servlet-class>src.servlet.JoueurServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>src.servlet.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>src.servlet.LogoutServlet</servlet-class>
+    </servlet>
+
+    <!-- Servlet Mappings -->
     <servlet-mapping>
         <servlet-name>MatchServlet</servlet-name>
-        <url-pattern>/matches</url-pattern>
+        <url-pattern>/match/*</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>EquipeServlet</servlet-name>
-        <servlet-class>servlet.EquipeServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>EquipeServlet</servlet-name>
-        <url-pattern>/equipes</url-pattern>
+        <url-pattern>/equipe/*</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>JoueurServlet</servlet-name>
-        <servlet-class>servlet.JoueurServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>JoueurServlet</servlet-name>
-        <url-pattern>/joueurs</url-pattern>
+        <url-pattern>/joueur/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Static content (CSS, JS, images) -->
     <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>/assets/*</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
-    <!-- Session configuration -->
-    <session-config>
-        <session-timeout>30</session-timeout> <!-- 30 minutes -->
-    </session-config>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 
-    <!-- Error handling -->
-    <error-page>
-        <error-code>404</error-code>
-        <location>/pages/error404.jsp</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/pages/error500.jsp</location>
-    </error-page>
+    <!-- Default Welcome File -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
+    <!-- JSP Access -->
+    <!-- All JSPs under /pages/* remain directly accessible -->
 </web-app>
 
 
