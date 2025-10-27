@@ -1,44 +1,49 @@
 package dao;
 
 import model.User;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import util.HibernateUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class UserDAO implements IDAO<User> {
+    private EntityManager em = Database.getEntityManager();
 
-    @Override
     public void save(User user) {
-        Database.save(user);
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
     }
 
-    @Override
     public void update(User user) {
-        Database.update(user);
+        em.getTransaction().begin();
+        em.merge(user);
+        em.getTransaction().commit();
     }
 
-    @Override
     public void delete(int id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            User user = session.get(User.class, id);
-            if (user != null) Database.delete(user);
+        User user = em.find(User.class, id);
+        if (user != null) {
+            em.getTransaction().begin();
+            em.remove(user);
+            em.getTransaction().commit();
         }
     }
 
-    @Override
-    public User findById(int id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(User.class, id);
-        }
-    }
-
-    @Override
     public List<User> findAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<User> query = session.createQuery("from User", User.class);
-            return query.list();
-        }
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
+        return query.getResultList();
+    }
+
+    public User findById(int id) {
+        return em.find(User.class, id);
+    }
+
+    public User findByUsername(String username) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+        query.setParameter("username", username);
+        List<User> result = query.getResultList();
+        return result.isEmpty() ? null : result.get(0);
     }
 }
+
 
