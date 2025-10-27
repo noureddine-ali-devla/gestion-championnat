@@ -5,6 +5,12 @@ import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 public class Database {
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("BasketChampionnatPU");
+
+    public static EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+    
     public static <T> void save(T entity) {
         Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
