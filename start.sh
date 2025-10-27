@@ -1,33 +1,51 @@
 #!/bin/bash
+
 set -e
 
-echo "Initialisation du projet BasketChampionnat..."
+echo "=== Initialisation du projet BasketChampionnat ==="
 
-if ! command -v java &> /dev/null; then
-  sudo apt update -y
-  sudo apt install -y openjdk-17-jdk wget unzip
+# Détection automatique des variables d'environnement
+JAVA_HOME=${JAVA_HOME:-$(dirname $(dirname $(readlink -f $(which java))))}
+CATALINA_HOME=${CATALINA_HOME:-/usr/local/tomcat}
+
+if [ ! -d "$JAVA_HOME" ]; then
+    echo "Erreur : JAVA_HOME introuvable."
+    exit 1
 fi
 
-if [ ! -d "$HOME/tomcat" ]; then
-  wget -q https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.48/bin/apache-tomcat-10.1.48.zip -O /tmp/tomcat.zip
-  unzip -q /tmp/tomcat.zip -d $HOME/
-  mv $HOME/apache-tomcat-10.1.48 $HOME/tomcat
-  chmod +x $HOME/tomcat/bin/*.sh
+if [ ! -d "$CATALINA_HOME" ]; then
+    echo "Erreur : CATALINA_HOME (Tomcat) introuvable."
+    exit 1
 fi
 
-APP_SRC="/workspaces/gestion-championnat/BasketChampionnat"
-TOMCAT_WEBAPP="$HOME/tomcat/webapps/ROOT"
+echo "JAVA_HOME = $JAVA_HOME"
+echo "CATALINA_HOME = $CATALINA_HOME"
 
-rm -rf "$TOMCAT_WEBAPP"
-mkdir -p "$TOMCAT_WEBAPP/WEB-INF/classes"
+# Compilation des sources Java
+echo "Compilation des fichiers Java..."
+SRC_DIR="./src"
+BIN_DIR="./WebContent/WEB-INF/classes"
+mkdir -p "$BIN_DIR"
+find "$SRC_DIR" -name "*.java" > sources.txt
+javac -d "$BIN_DIR" -cp "$BIN_DIR:./lib/*" @sources.txt
+rm sources.txt
 
-cp -r $APP_SRC/WebContent/* "$TOMCAT_WEBAPP/" || true
-cp -r $APP_SRC/lib "$TOMCAT_WEBAPP/WEB-INF/" || true
+# Copie des bibliothèques dans WEB-INF/lib
+echo "Mise à jour des librairies..."
+mkdir -p "$BIN_DIR/../lib"
+cp -u ./lib/*.jar "$BIN_DIR/../lib/"
 
-if [ -d "$APP_SRC/src" ]; then
-  javac -encoding UTF-8 -cp "$APP_SRC/lib/*:$HOME/tomcat/lib/*" -d "$TOMCAT_WEBAPP/WEB-INF/classes" $(find "$APP_SRC/src" -name "*.java")
-fi
+# Déploiement dans Tomcat
+DEPLOY_DIR="$CATALINA_HOME/webapps/BasketChampionnat"
+echo "Déploiement dans Tomcat..."
+rm -rf "$DEPLOY_DIR"
+cp -r ./WebContent "$DEPLOY_DIR"
 
-cd $HOME/tomcat/bin
-./catalina.sh run
+# Redémarrage de Tomcat
+echo "Redémarrage de Tomcat..."
+"$CATALINA_HOME/bin/shutdown.sh" || true
+sleep 3
+"$CATALINA_HOME/bin/startup.sh"
+
+echo "=== Projet BasketChampionnat déployé avec succès ==="
 
