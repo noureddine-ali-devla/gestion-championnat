@@ -10,9 +10,10 @@ public class MatchDAO {
     private static final List<Match> matchs = new ArrayList<>();
 
     static {
-        Equipe e1 = new Equipe("Lions", "Casablanca", "lions@example.com");
-        Equipe e2 = new Equipe("Tigers", "Rabat", "tigers@example.com");
-        Equipe e3 = new Equipe("Eagles", "Marrakech", "eagles@example.com");
+        new Equipe("Lions", "Casablanca", "lions@example.com", "Coach A");
+        new Equipe("Tigers", "Rabat", "tigers@example.com", "Coach B");
+        new Equipe("Eagles", "Marrakech", "eagles@example.com", "Coach C");
+
 
         matchs.add(new Match(e1, e2, LocalDate.now().minusDays(3), 80, 75, true));
         matchs.add(new Match(e2, e3, LocalDate.now().minusDays(2), 68, 70, true));
