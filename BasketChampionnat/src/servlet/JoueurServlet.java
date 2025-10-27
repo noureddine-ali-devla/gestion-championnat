@@ -40,7 +40,6 @@ public class JoueurServlet extends HttpServlet {
         int points = Integer.parseInt(request.getParameter("points"));
         int equipeId = Integer.parseInt(request.getParameter("equipeId"));
         Equipe equipe = service.getEquipeById(equipeId);
-        Joueur j = new Joueur(nom, prenom, poste, numero, points, equipe);
         service.ajouterJoueur(j);
         response.sendRedirect("joueurs");
     }
