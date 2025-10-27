@@ -25,8 +25,6 @@ public class ClassementService {
         }
 
         for (Match m : matchs) {
-            Statistique sDom = classement.get(m.getDomicile());
-            Statistique sExt = classement.get(m.getExterieur());
 
             sDom.setButsMarques(sDom.getButsMarques() + m.getScoreDomicile());
             sDom.setButsEncaisses(sDom.getButsEncaisses() + m.getScoreExterieur());
@@ -40,10 +38,6 @@ public class ClassementService {
             } else if (m.getScoreDomicile() < m.getScoreExterieur()) {
                 sExt.setVictoires(sExt.getVictoires() + 1);
                 sDom.setDefaites(sDom.getDefaites() + 1);
-            } else {
-                sDom.setNuls(sDom.getNuls() + 1);
-                sExt.setNuls(sExt.getNuls() + 1);
-            }
         }
 
         return classement.entrySet().stream()
