@@ -1,5 +1,8 @@
 package dao;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
