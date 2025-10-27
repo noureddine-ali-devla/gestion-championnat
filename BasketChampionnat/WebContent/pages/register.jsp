@@ -1,26 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Register</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-<form action="register" method="post">
-    <label>Username:</label>
-    <input type="text" name="username" required>
-    <label>Password:</label>
-    <input type="password" name="password" required>
-    <label>Role:</label>
-    <select name="role">
-        <option value="USER">User</option>
-        <option value="ADMIN">Admin</option>
-    </select>
-    <button type="submit">Register</button>
-</form>
-<c:if test="${not empty message}">
-    <div class="message">${message}</div>
-</c:if>
-</body>
-</html>
+<%@ include file="includes/header.jsp" %>
+<main>
+    <h2>Inscription</h2>
+    <form action="RegisterServlet" method="post">
+        <label for="username">Nom d'utilisateur:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Mot de passe:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="role">Rôle:</label>
+        <select id="role" name="role">
+            <option value="USER">Utilisateur</option>
+            <option value="ADMIN">Administrateur</option>
+        </select>
+        <button type="submit">S'inscrire</button>
+    </form>
+    <p>Déjà inscrit ? <a href="login.jsp">Connectez-vous</a></p>
+    <c:if test="${not empty error}">
+        <div class="error">${error}</div>
+    </c:if>
+</main>
+<%@ include file="includes/footer.jsp" %>
+
 
 
