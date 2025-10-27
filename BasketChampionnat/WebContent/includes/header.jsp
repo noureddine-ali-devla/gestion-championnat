@@ -14,8 +14,8 @@
 
 <nav style="display:flex; align-items:center; gap:15px; padding:10px;">
     <a href="<%= request.getContextPath() %>/index.jsp">Accueil</a>
-    <a href="<%= request.getContextPath() %>/pages/listeEquipes.jsp">Équipes</a>
-    <a href="<%= request.getContextPath() %>/pages/listeJoueurs.jsp">Joueurs</a>
+    <a href="<%= request.getContextPath() %>/pages/equipe/listeEquipes.jsp">Équipes</a>
+    <a href="<%= request.getContextPath() %>/pages/joueur/listeJoueurs.jsp">Joueurs</a>
     <a href="<%= request.getContextPath() %>/pages/matchs.jsp">Matchs</a>
     <a href="<%= request.getContextPath() %>/pages/classement.jsp">Classement</a>
     <a href="<%= request.getContextPath() %>/dashboard.jsp">Tableau de Bord</a>
