@@ -6,7 +6,6 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class UtilisateurDAO implements IDAO<Utilisateur> {
-    private EntityManager em = Database.getEntityManager();
 
     public void save(Utilisateur u) {
         em.getTransaction().begin();
