@@ -15,7 +15,6 @@ public class AuthServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user = service.authentifier(username, password);
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
