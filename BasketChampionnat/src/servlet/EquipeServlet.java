@@ -34,7 +34,6 @@ public class EquipeServlet extends HttpServlet {
         String nom = request.getParameter("nom");
         String ville = request.getParameter("ville");
         String entraineur = request.getParameter("entraineur");
-        Equipe e = new Equipe(nom, ville, entraineur, null);
         service.ajouterEquipe(e);
         response.sendRedirect("equipes");
     }
