@@ -43,7 +43,8 @@ public class EquipeServlet extends HttpServlet {
         String entraineur = request.getParameter("entraineur");
 
         // Assurez-vous que le constructeur de Equipe prend 3 paramètres (nom, ville, entraineur)
-        Equipe e = new Equipe(nom, ville, entraineur);
+        Equipe e = new Equipe(nom, ville, entraineur, ""); // email vide ou par défaut
+
         service.ajouterEquipe(e);
 
         response.sendRedirect(request.getContextPath() + "/equipes");
