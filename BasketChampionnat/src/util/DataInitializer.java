@@ -22,9 +22,10 @@ public class DataInitializer {
                 return;
             }
 
-            Equipe e1 = new Equipe("Raptors Agadir", "Agadir", "coach.raptors@gmail.com");
-            Equipe e2 = new Equipe("Lions Casablanca", "Casablanca", "coach.lions@gmail.com");
-            Equipe e3 = new Equipe("Eagles Marrakech", "Marrakech", "coach.eagles@gmail.com");
+            new Equipe("Lions", "Casablanca", "lions@example.com", "Coach A");
+            new Equipe("Tigers", "Rabat", "tigers@example.com", "Coach B");
+            new Equipe("Eagles", "Marrakech", "eagles@example.com", "Coach C");
+
 
             Joueur j1 = new Joueur("Youssef", "Bennani", "Arrière", 1, 0, e1);
             Joueur j2 = new Joueur("Omar", "El Idrissi", "Ailier", 2, 0, e1);
