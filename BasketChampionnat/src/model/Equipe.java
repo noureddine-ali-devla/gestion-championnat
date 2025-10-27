@@ -5,14 +5,16 @@ public class Equipe {
     private String nom;
     private String ville;
     private String email;
+    private String entraineur;
     private Statistique statistique;
 
     public Equipe() {}
 
-    public Equipe(String nom, String ville, String email) {
+    public Equipe(String nom, String ville, String email, String entraineur) {
         this.nom = nom;
         this.ville = ville;
         this.email = email;
+        this.entraineur = entraineur;
         this.statistique = new Statistique(this);
     }
 
@@ -27,6 +29,9 @@ public class Equipe {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String getEntraineur() { return entraineur; }
+    public void setEntraineur(String entraineur) { this.entraineur = entraineur; }
 
     public Statistique getStatistique() { return statistique; }
     public void setStatistique(Statistique statistique) { this.statistique = statistique; }
