@@ -1,39 +1,27 @@
 package dao;
 
 import model.Joueur;
-import model.Equipe;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JoueurDAO {
-    private static final List<Joueur> joueurs = new ArrayList<>();
+    private List<Joueur> joueurs = new ArrayList<>();
+    private int nextId = 1;
 
-    static {
-        new Equipe("Lions", "Casablanca", "lions@example.com", "Coach A");
-        new Equipe("Tigers", "Rabat", "tigers@example.com", "Coach B");
-        new Equipe("Eagles", "Marrakech", "eagles@example.com", "Coach C");
-
-        joueurs.add(new Joueur("Youssef", "Bennani", "Arrière", 1, 0, e1));
-        joueurs.add(new Joueur("Omar", "El Idrissi", "Ailier", 2, 0, e1));
-        joueurs.add(new Joueur("Adam", "Bouzekri", "Pivot", 3, 0, e2));
+    public JoueurDAO() {
+        // Initialisation des joueurs si nécessaire
     }
 
-    public List<Joueur> findAll() { return joueurs; }
-
-    public Joueur findById(int id) {
-        for (Joueur j : joueurs) {
-            if (j.getId() == id) return j;
-        }
-        return null;
+    public void save(Joueur joueur) {
+        joueur.setId(nextId++);
+        joueurs.add(joueur);
     }
-
-    public void save(Joueur joueur) { joueurs.add(joueur); }
 
     public void update(Joueur joueur) {
         for (int i = 0; i < joueurs.size(); i++) {
             if (joueurs.get(i).getId() == joueur.getId()) {
                 joueurs.set(i, joueur);
-                break;
+                return;
             }
         }
     }
@@ -41,6 +29,15 @@ public class JoueurDAO {
     public void delete(int id) {
         joueurs.removeIf(j -> j.getId() == id);
     }
+
+    public List<Joueur> findAll() {
+        return new ArrayList<>(joueurs);
+    }
+
+    public Joueur findById(int id) {
+        return joueurs.stream().filter(j -> j.getId() == id).findFirst().orElse(null);
+    }
 }
+
 
 
