@@ -1,7 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="includes/header.jsp" %>
-<h1>Welcome to Basket Championnat Management</h1>
-<p><a href="login.jsp">Login</a> or <a href="register.jsp">Register</a></p>
+<main>
+    <h1>Bienvenue au Basket Championnat</h1>
+    <p>Gérez vos equipes, joueurs et matchs facilement.</p>
+    <div>
+        <a href="login.jsp">Se connecter</a> |
+        <a href="register.jsp">S'inscrire</a>
+    </div>
+</main>
 <%@ include file="includes/footer.jsp" %>
 
 
