@@ -9,8 +9,10 @@ public class JoueurDAO {
     private static final List<Joueur> joueurs = new ArrayList<>();
 
     static {
-        Equipe e1 = new Equipe("Lions", "Casablanca", "lions@example.com");
-        Equipe e2 = new Equipe("Tigers", "Rabat", "tigers@example.com");
+        new Equipe("Lions", "Casablanca", "lions@example.com", "Coach A");
+        new Equipe("Tigers", "Rabat", "tigers@example.com", "Coach B");
+        new Equipe("Eagles", "Marrakech", "eagles@example.com", "Coach C");
+
         joueurs.add(new Joueur("Youssef", "Bennani", "Arrière", 1, 0, e1));
         joueurs.add(new Joueur("Omar", "El Idrissi", "Ailier", 2, 0, e1));
         joueurs.add(new Joueur("Adam", "Bouzekri", "Pivot", 3, 0, e2));
