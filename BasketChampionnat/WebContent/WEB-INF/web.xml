@@ -19,27 +19,27 @@
     <!-- Servlets -->
     <servlet>
         <servlet-name>MatchServlet</servlet-name>
-        <servlet-class>src.servlet.MatchServlet</servlet-class>
+        <servlet-class>servlet.MatchServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>EquipeServlet</servlet-name>
-        <servlet-class>src.servlet.EquipeServlet</servlet-class>
+        <servlet-class>servlet.EquipeServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>JoueurServlet</servlet-name>
-        <servlet-class>src.servlet.JoueurServlet</servlet-class>
+        <servlet-class>servlet.JoueurServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>src.servlet.LoginServlet</servlet-class>
+        <servlet-class>servlet.LoginServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>src.servlet.LogoutServlet</servlet-class>
+        <servlet-class>servlet.LogoutServlet</servlet-class>
     </servlet>
 
     <!-- Servlet Mappings -->
