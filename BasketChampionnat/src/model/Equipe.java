@@ -10,12 +10,18 @@ public class Equipe {
 
     public Equipe() {}
 
+    // Nouveau constructeur à 4 paramètres
     public Equipe(String nom, String ville, String email, String entraineur) {
         this.nom = nom;
         this.ville = ville;
         this.email = email;
         this.entraineur = entraineur;
         this.statistique = new Statistique(this);
+    }
+
+    // Ancien constructeur à 3 paramètres (pour compatibilité)
+    public Equipe(String nom, String ville, String email) {
+        this(nom, ville, email, "Inconnu");
     }
 
     public int getId() { return id; }
@@ -36,5 +42,6 @@ public class Equipe {
     public Statistique getStatistique() { return statistique; }
     public void setStatistique(Statistique statistique) { this.statistique = statistique; }
 }
+
 
 
