@@ -38,6 +38,7 @@ public class ClassementService {
             } else if (m.getScoreDomicile() < m.getScoreExterieur()) {
                 sExt.setVictoires(sExt.getVictoires() + 1);
                 sDom.setDefaites(sDom.getDefaites() + 1);
+            }
         }
 
         return classement.entrySet().stream()
