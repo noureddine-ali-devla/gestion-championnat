@@ -18,7 +18,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // Vérifier si l'utilisateur existe déjà
+        
         User existingUser = userDAO.findByUsername(username);
         if (existingUser != null) {
             response.sendRedirect("pages/register.jsp?error=exists");
@@ -39,3 +39,4 @@ public class RegisterServlet extends HttpServlet {
         response.sendRedirect("pages/register.jsp");
     }
 }
+
