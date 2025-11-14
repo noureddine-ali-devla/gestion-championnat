@@ -14,7 +14,7 @@ public class MatchDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
 
-            // Re-attach teams to current session
+            
             Team team1 = session.get(Team.class, match.getTeam1().getId());
             Team team2 = session.get(Team.class, match.getTeam2().getId());
             match.setTeam1(team1);
@@ -74,3 +74,4 @@ public class MatchDAO {
         }
     }
 }
+
